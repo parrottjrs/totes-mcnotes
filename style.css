@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght@1,300&display=swap");
+
+body {
+  background-color: #e9d8a6;
+  margin: 0;
+}
+
+header {
+  background-color: #0a9396;
+  height: 150px;
+  width: full;
+  display: flex;
+}
+
+h1 {
+  text-align: left;
+  padding-top: 10px;
+  font-family: Shantell Sans;
+  font-weight: 700;
+  color: #001219;
+  font-size: 45px;
+  margin-left: 15px;
+  display: inline-block;
+}
+
+button {
+  font-family: Shantell Sans;
+  font-weight: 700;
+  color: #001219;
+  margin-left: 15px;
+  margin-top: 60px;
+  height: 30px;
+  width: 100;
+  display: inline-block;
+}
+
+.title {
+  margin-left: 10px;
+  background-color: inherit;
+  text-decoration-color: #001219;
+  font-family: Shantell Sans;
+  margin-top: 50px;
+  height: 40px;
+}
