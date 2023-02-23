@@ -5,40 +5,61 @@ body {
   margin: 0;
 }
 
-header {
+/* ****** */
+/* header */
+/* ****** */
+
+#header {
   background-color: #0a9396;
   height: 150px;
   width: full;
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 h1 {
-  text-align: left;
-  padding-top: 10px;
   font-family: Shantell Sans;
   font-weight: 700;
   color: #001219;
   font-size: 45px;
-  margin-left: 15px;
+  margin-left: 50px;
+  padding-bottom: 7px;
   display: inline-block;
 }
 
-button {
-  font-family: Shantell Sans;
-  font-weight: 700;
-  color: #001219;
-  margin-left: 15px;
-  margin-top: 60px;
-  height: 30px;
-  width: 100;
-  display: inline-block;
-}
-
-.title {
+.title-input {
   margin-left: 10px;
   background-color: inherit;
   text-decoration-color: #001219;
   font-family: Shantell Sans;
-  margin-top: 50px;
   height: 40px;
+}
+
+.move-button {
+  font-family: Shantell Sans;
+  font-weight: 700;
+  color: #001219;
+  margin-left: 15px;
+  height: 30px;
+  display: inline-block;
+}
+
+/* ******* */
+/* section */
+/* ******* */
+
+textarea {
+  display: block;
+  margin: 20px auto;
+  padding: 10px;
+}
+
+.save-button {
+  font-family: Shantell Sans;
+  font-weight: 700;
+  color: #001219;
+  height: 30px;
+  display: block;
+  margin: 20px auto;
 }
