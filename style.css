@@ -10,7 +10,7 @@ body {
 /* ****** */
 
 #header {
-  background-color: #0a9396;
+  background-color: #005f73;
   height: 150px;
   width: full;
   display: flex;
@@ -30,7 +30,6 @@ h1 {
 
 .title-input {
   margin-left: 10px;
-  background-color: inherit;
   text-decoration-color: #001219;
   font-family: Shantell Sans;
   height: 40px;
@@ -42,6 +41,7 @@ h1 {
   color: #001219;
   margin-left: 15px;
   height: 30px;
+  border-width: 2px;
   display: inline-block;
 }
 
@@ -49,10 +49,28 @@ h1 {
 /* section */
 /* ******* */
 
+section {
+  display: grid;
+  justify-content: space-around;
+  align-content: space-evenly;
+}
+
+.note-button {
+  font-family: Shantell Sans;
+  font-weight: 700;
+  color: #001219;
+  width: 300px;
+  margin-top: 15px;
+  border-width: 2px;
+  border-radius: 30px;
+  font-size: 15px;
+}
+
 textarea {
   display: block;
   margin: 20px auto;
   padding: 10px;
+  font-family: Shantell Sans;
 }
 
 .save-button {
