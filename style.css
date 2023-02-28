@@ -55,6 +55,11 @@ section {
   align-content: space-evenly;
 }
 
+.color-picker {
+  margin: 10px auto;
+  width: 100px;
+}
+
 .note-button {
   font-family: Shantell Sans;
   font-weight: 700;
@@ -68,16 +73,13 @@ section {
 
 textarea {
   display: block;
-  margin: 20px auto;
-  padding: 10px;
   font-family: Shantell Sans;
 }
 
-.save-button {
+.edit-button {
   font-family: Shantell Sans;
   font-weight: 700;
   color: #001219;
   height: 30px;
-  display: block;
-  margin: 20px auto;
+  margin: 5px auto;
 }

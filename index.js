@@ -14,18 +14,32 @@ const getNotes = () => {
 const notes = getNotes();
 
 const saveNote = (updatedNote) => {
-  const notes = getNotes();
-
-  const existing = notes.find((note) => note.id == updatedNote.id);
-
-  if (existing) {
-    existing.title = updatedNote.title;
-    existing.content = updatedNote.content;
+  if (updatedNote.title === "") {
+    alert("Your note needs a title!");
   } else {
-    updatedNote.id = Math.floor(Math.random() * 1000000);
-    notes.push(updatedNote);
+    const notes = getNotes();
+
+    const existing = notes.find((note) => note.id == updatedNote.id);
+
+    if (existing) {
+      existing.title = updatedNote.title;
+      existing.content = updatedNote.content;
+      existing.color = updatedNote.color;
+    } else {
+      updatedNote.id = Math.floor(Math.random() * 100000);
+      notes.push(updatedNote);
+    }
+    localStorage.setItem("notes", JSON.stringify(notes));
+    changePage("home");
+    window.location.reload();
   }
-  localStorage.setItem("notes", JSON.stringify(notes));
+};
+
+const deleteNote = (noteToDelete) => {
+  const notes = getNotes();
+  const newNotes = notes.filter((note) => note.id != noteToDelete.id);
+
+  localStorage.setItem("notes", JSON.stringify(newNotes));
   changePage("home");
   window.location.reload();
 };
@@ -99,33 +113,49 @@ const pages = {
       );
 
       const saveButton = document.createElement("button");
-      saveButton.classList.add("save-button");
+      saveButton.classList.add("edit-button");
+
+      const colorPicker = document.createElement("input");
+      colorPicker.setAttribute("type", "color");
+      colorPicker.classList.add("color-picker");
 
       if (note) {
-        note.id = note.id;
+        const deleteButton = document.createElement("button");
+        deleteButton.innerText = "delete";
+        deleteButton.classList.add("edit-button");
+
+        deleteButton.addEventListener("click", () => {
+          deleteNote(note);
+        });
+
+        container.append(deleteButton);
+
         titleInput.value = note.title;
         noteText.value = note.content;
+        colorPicker.value = note.color;
 
-        saveButton.innerText = "save note";
+        saveButton.innerText = "save";
         saveButton.addEventListener("click", () => {
           saveNote({
             id: note.id,
             title: titleInput.value,
-            content: noteText.value,
+            content: titleInput.value,
+            color: colorPicker.value,
           });
         });
       } else {
-        saveButton.innerText = "create note";
+        saveButton.innerText = "create";
         saveButton.addEventListener("click", () => {
           saveNote({
             title: titleInput.value,
             content: noteText.value,
+            color: colorPicker.value,
           });
         });
       }
 
       header.append(titleInput, moveButton);
-      container.append(noteText, saveButton);
+      container.prepend(colorPicker, noteText, saveButton);
     },
   },
 };
