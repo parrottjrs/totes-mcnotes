@@ -11,14 +11,12 @@ const getNotes = () => {
   }
 };
 
-const notes = getNotes();
+let notes = getNotes();
 
 const saveNote = (updatedNote) => {
   if (updatedNote.title === "") {
     alert("Your note needs a title!");
   } else {
-    const notes = getNotes();
-
     const existing = notes.find((note) => note.id == updatedNote.id);
 
     if (existing) {
@@ -31,17 +29,14 @@ const saveNote = (updatedNote) => {
     }
     localStorage.setItem("notes", JSON.stringify(notes));
     changePage("home");
-    window.location.reload();
   }
 };
 
 const deleteNote = (noteToDelete) => {
-  const notes = getNotes();
-  const newNotes = notes.filter((note) => note.id != noteToDelete.id);
+  notes = notes.filter((note) => note.id != noteToDelete.id);
 
-  localStorage.setItem("notes", JSON.stringify(newNotes));
+  localStorage.setItem("notes", JSON.stringify(notes));
   changePage("home");
-  window.location.reload();
 };
 
 const clear = () => {
@@ -79,6 +74,7 @@ const pages = {
       notes.map((note) => {
         const noteElm = document.createElement("button");
         noteElm.classList.add("note-button");
+        noteElm.style.backgroundColor = note.color;
 
         noteElm.addEventListener("click", () => {
           clear();
@@ -105,8 +101,6 @@ const pages = {
       titleInput.classList.add("title-input");
 
       const noteText = document.createElement("textarea");
-      noteText.setAttribute("rows", "25");
-      noteText.setAttribute("cols", "75");
       noteText.setAttribute(
         "placeholder",
         "The most important thing I need to do is..."
@@ -122,7 +116,7 @@ const pages = {
       if (note) {
         const deleteButton = document.createElement("button");
         deleteButton.innerText = "delete";
-        deleteButton.classList.add("edit-button");
+        deleteButton.classList.add("delete-button");
 
         deleteButton.addEventListener("click", () => {
           deleteNote(note);

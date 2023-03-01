@@ -32,7 +32,9 @@ h1 {
   margin-left: 10px;
   text-decoration-color: #001219;
   font-family: Shantell Sans;
-  height: 40px;
+  height: 2rem;
+  width: 20rem;
+  max-width: 100vw;
 }
 
 .move-button {
@@ -43,6 +45,10 @@ h1 {
   height: 30px;
   border-width: 2px;
   display: inline-block;
+  border-width: 2px;
+  border-radius: 30px;
+  font-size: 15px;
+  background-color: #ee9b00;
 }
 
 /* ******* */
@@ -74,12 +80,28 @@ section {
 textarea {
   display: block;
   font-family: Shantell Sans;
+  max-width: 100vw;
+  max-width: 100vw;
+  width: 30rem;
+  height: 20rem;
 }
 
-.edit-button {
+.edit-button,
+.delete-button {
   font-family: Shantell Sans;
   font-weight: 700;
   color: #001219;
   height: 30px;
   margin: 5px auto;
+  border-width: 2px;
+  border-radius: 30px;
+  font-size: 15px;
+}
+
+.edit-button {
+  background-color: #ee9b00;
+}
+
+.delete-button {
+  background-color: #ff2711;
 }
