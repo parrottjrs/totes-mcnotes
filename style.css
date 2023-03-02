@@ -2,6 +2,7 @@
 
 body {
   background-color: #e9d8a6;
+  background-image: url(./cork.jpeg);
   margin: 0;
 }
 
@@ -56,9 +57,21 @@ h1 {
 /* ******* */
 
 section {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wrapper {
+  justify-content: center;
+  align-content: center;
   display: grid;
-  justify-content: space-around;
-  align-content: space-evenly;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  grid-auto-rows: minmax(100px, auto);
+  align-items: center;
+  justify-items: center;
 }
 
 .color-picker {
@@ -67,14 +80,17 @@ section {
 }
 
 .note-button {
+  width: 8rem;
+  height: 8rem;
+  margin-top: 15px;
+  border-width: 1px;
+  font-size: 14px;
+}
+
+.note-button p {
   font-family: Shantell Sans;
   font-weight: 700;
   color: #001219;
-  width: 300px;
-  margin-top: 15px;
-  border-width: 2px;
-  border-radius: 30px;
-  font-size: 15px;
 }
 
 textarea {

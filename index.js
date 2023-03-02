@@ -23,6 +23,7 @@ const saveNote = (updatedNote) => {
       existing.title = updatedNote.title;
       existing.content = updatedNote.content;
       existing.color = updatedNote.color;
+      existing.updated = updatedNote.updated;
     } else {
       updatedNote.id = Math.floor(Math.random() * 100000);
       notes.push(updatedNote);
@@ -69,7 +70,11 @@ const pages = {
         changePage("note")
       );
 
+      const noteButtonWrapper = document.createElement("div");
+      noteButtonWrapper.classList.add("wrapper");
+
       header.append(headerText, moveButton);
+      container.append(noteButtonWrapper);
 
       notes.map((note) => {
         const noteElm = document.createElement("button");
@@ -85,7 +90,7 @@ const pages = {
         noteTitle.innerText = note.title;
         noteElm.appendChild(noteTitle);
 
-        container.appendChild(noteElm);
+        noteButtonWrapper.appendChild(noteElm);
       });
     },
   },
@@ -133,8 +138,10 @@ const pages = {
           saveNote({
             id: note.id,
             title: titleInput.value,
-            content: titleInput.value,
+            content: noteText.value,
             color: colorPicker.value,
+            created: note.created,
+            updated: Date().toLocaleString(),
           });
         });
       } else {
@@ -144,6 +151,7 @@ const pages = {
             title: titleInput.value,
             content: noteText.value,
             color: colorPicker.value,
+            created: Date().toLocaleString(),
           });
         });
       }
