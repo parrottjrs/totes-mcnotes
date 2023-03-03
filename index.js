@@ -58,6 +58,14 @@ const hex2rgb = (hex) => {
   }
 };
 
+function download(content, fileName, contentType) {
+  var a = document.createElement("a");
+  var file = new Blob([content], { type: contentType });
+  a.href = URL.createObjectURL(file);
+  a.download = fileName;
+  a.click();
+}
+
 const components = {
   moveButton(text, onClick) {
     const moveButton = document.createElement("button");
@@ -144,7 +152,15 @@ const pages = {
           deleteNote(note);
         });
 
-        container.append(deleteButton);
+        const exportButton = document.createElement("button");
+        exportButton.innerText = "export";
+        exportButton.classList.add("edit-button");
+
+        exportButton.addEventListener("click", () => {
+          download(note.content, `${note.title}.txt`, "text/plain");
+        });
+
+        container.append(exportButton, deleteButton);
 
         titleInput.value = note.title;
         noteText.value = note.content;
