@@ -45,6 +45,19 @@ const clear = () => {
   container.innerHTML = "";
 };
 
+const hex2rgb = (hex) => {
+  const rgb = [
+    ("0x" + hex[1] + hex[2]) | 0,
+    ("0x" + hex[3] + hex[4]) | 0,
+    ("0x" + hex[5] + hex[6]) | 0,
+  ];
+  if (rgb[0] + rgb[1] + rgb[2] <= 150) {
+    return "#ffffff";
+  } else {
+    return "#000000";
+  }
+};
+
 const components = {
   moveButton(text, onClick) {
     const moveButton = document.createElement("button");
@@ -88,6 +101,7 @@ const pages = {
 
         const noteTitle = document.createElement("p");
         noteTitle.innerText = note.title;
+        noteTitle.style.color = hex2rgb(note.color);
         noteElm.appendChild(noteTitle);
 
         noteButtonWrapper.appendChild(noteElm);
@@ -105,18 +119,21 @@ const pages = {
       titleInput.setAttribute("placeholder", "My New Note...");
       titleInput.classList.add("title-input");
 
-      const noteText = document.createElement("textarea");
-      noteText.setAttribute(
-        "placeholder",
-        "The most important thing I need to do is..."
-      );
-
       const saveButton = document.createElement("button");
       saveButton.classList.add("edit-button");
 
       const colorPicker = document.createElement("input");
       colorPicker.setAttribute("type", "color");
+      colorPicker.setAttribute("value", "#fffa5c");
       colorPicker.classList.add("color-picker");
+
+      const noteText = document.createElement("textarea");
+      noteText.setAttribute(
+        "placeholder",
+        "The most important thing I need to do is..."
+      );
+      noteText.style.backgroundColor = "#fffa5c";
+      noteText.style.textDecorationColor = "#000000";
 
       if (note) {
         const deleteButton = document.createElement("button");
@@ -132,6 +149,8 @@ const pages = {
         titleInput.value = note.title;
         noteText.value = note.content;
         colorPicker.value = note.color;
+        noteText.style.backgroundColor = note.color;
+        noteText.style.textDecorationColor = hex2rgb(note.color);
 
         saveButton.innerText = "save";
         saveButton.addEventListener("click", () => {
