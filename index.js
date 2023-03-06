@@ -58,13 +58,13 @@ const hex2rgb = (hex) => {
   }
 };
 
-function download(content, fileName, contentType) {
-  var a = document.createElement("a");
-  var file = new Blob([content], { type: contentType });
-  a.href = URL.createObjectURL(file);
-  a.download = fileName;
-  a.click();
-}
+const download = (content, fileName, contentType) => {
+  const noteToDownload = document.createElement("a");
+  const file = new Blob([content], { type: contentType });
+  noteToDownload.href = URL.createObjectURL(file);
+  noteToDownload.download = fileName;
+  noteToDownload.click();
+};
 
 const components = {
   moveButton(text, onClick) {
@@ -143,6 +143,25 @@ const pages = {
       noteText.style.backgroundColor = "#fffa5c";
       noteText.style.textDecorationColor = "#000000";
 
+      const importFile = document.createElement("input");
+      importFile.setAttribute("type", "file");
+      importFile.addEventListener("change", () => {
+        const [file] = importFile.files;
+        const reader = new FileReader();
+
+        reader.addEventListener(
+          "load",
+          () => {
+            noteText.innerText = reader.result;
+          },
+          false
+        );
+
+        if (file) {
+          reader.readAsText(file);
+        }
+      });
+
       if (note) {
         const deleteButton = document.createElement("button");
         deleteButton.innerText = "delete";
@@ -190,9 +209,8 @@ const pages = {
           });
         });
       }
-
       header.append(titleInput, moveButton);
-      container.prepend(colorPicker, noteText, saveButton);
+      container.prepend(colorPicker, noteText, saveButton, importFile);
     },
   },
 };
