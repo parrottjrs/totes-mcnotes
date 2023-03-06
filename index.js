@@ -1,105 +1,6 @@
 const header = document.querySelector("#header");
 const container = document.querySelector("#container");
 
-const getNotes = () => {
-  const maybeNotes = localStorage.getItem("notes");
-
-  if (maybeNotes === null) {
-    return [];
-  } else {
-    return JSON.parse(maybeNotes);
-  }
-};
-
-let notes = getNotes();
-
-const saveNote = (updatedNote) => {
-  if (updatedNote.title === "") {
-    alert("Your note needs a title!");
-  } else {
-    const existing = notes.find((note) => note.id == updatedNote.id);
-
-    if (existing) {
-      existing.title = updatedNote.title;
-      existing.content = updatedNote.content;
-      existing.color = updatedNote.color;
-      existing.updated = updatedNote.updated;
-    } else {
-      updatedNote.id = Math.floor(Math.random() * 100000);
-      notes.push(updatedNote);
-    }
-    localStorage.setItem("notes", JSON.stringify(notes));
-    changePage("home");
-  }
-};
-
-const deleteNote = (noteToDelete) => {
-  notes = notes.filter((note) => note.id != noteToDelete.id);
-
-  localStorage.setItem("notes", JSON.stringify(notes));
-  changePage("home");
-};
-
-const clear = () => {
-  header.innerHTML = "";
-  container.innerHTML = "";
-};
-
-const hex2rgb = (hex) => {
-  const rgb = [
-    ("0x" + hex[1] + hex[2]) | 0,
-    ("0x" + hex[3] + hex[4]) | 0,
-    ("0x" + hex[5] + hex[6]) | 0,
-  ];
-  if (rgb[0] + rgb[1] + rgb[2] <= 150) {
-    return "#ffffff";
-  } else {
-    return "#000000";
-  }
-};
-
-const exportNote = (content, fileName, contentType) => {
-  const noteToDownload = document.createElement("a");
-  const file = new Blob([content], { type: contentType });
-  noteToDownload.href = URL.createObjectURL(file);
-  noteToDownload.download = fileName;
-  noteToDownload.click();
-};
-
-const importFileToNote = () => {
-  noteToImport = document.querySelector("#import-field");
-  noteContent = document.querySelector("#note-content");
-  const [file] = noteToImport.files;
-  const reader = new FileReader();
-
-  reader.addEventListener(
-    "load",
-    () => {
-      noteContent.innerText = reader.result;
-    },
-    false
-  );
-
-  if (file) {
-    reader.readAsText(file);
-  }
-};
-
-const components = {
-  moveButton(text, onClick) {
-    const moveButton = document.createElement("button");
-    moveButton.innerText = text;
-    moveButton.classList.add("move-button");
-    moveButton.addEventListener("click", onClick);
-    return moveButton;
-  },
-};
-
-const changePage = (pageKey, arg) => {
-  clear();
-  pages[pageKey].create(arg);
-};
-
 const pages = {
   home: {
     create() {
@@ -142,36 +43,43 @@ const pages = {
       );
 
       const titleInput = document.createElement("input");
-      titleInput.setAttribute("type", "text");
-      titleInput.setAttribute("placeholder", "My New Note...");
+      setAttributes(titleInput, {
+        type: "text",
+        placeholder: "My New Note...",
+      });
       titleInput.classList.add("title-input");
 
       const saveButton = document.createElement("button");
       saveButton.classList.add("edit-button");
 
       const colorPicker = document.createElement("input");
-      colorPicker.setAttribute("type", "color");
-      colorPicker.setAttribute("value", "#fffa5c");
-      colorPicker.classList.add("color-picker");
-
-      const noteContent = document.createElement("textarea");
-      noteContent.setAttribute("id", "note-text");
-      noteContent.setAttribute(
-        "placeholder",
-        "The most important thing I need to do is..."
-      );
-      noteContent.style.backgroundColor = "#fffa5c";
-      noteContent.style.textDecorationColor = "#000000";
-
-      const importField = document.createElement("input");
-      importField.setAttribute("type", "file");
-      importField.setAttribute("id", "import-field");
-      importField.addEventListener("change", () => {
-        importFileToNote();
+      setAttributes(colorPicker, {
+        id: "color-picker",
+        type: "color",
+        value: "#fffa5c",
+      });
+      colorPicker.addEventListener("change", () => {
+        const colorPicker = document.getElementById("color-picker");
+        const noteContent = document.getElementById("note-content");
+        noteContent.style.backgroundColor = colorPicker.value;
+        noteContent.style.color = hex2rgb(colorPicker.value);
+        console.log(hex2rgb(colorPicker.value));
       });
 
+      const noteContent = document.createElement("textarea");
+      setAttributes(noteContent, {
+        id: "note-content",
+        placeholder: "The most important thing I need to do is...",
+      });
+
+      noteContent.style.backgroundColor = "#fffa5c";
+      noteContent.style.color = "#000000";
+
       if (note) {
-        const deleteButton = components.moveButton("delete", () => {
+        const deleteButton = document.createElement("button");
+        deleteButton.classList.add("delete-button");
+        deleteButton.innerText = "delete";
+        deleteButton.addEventListener("click", () => {
           deleteNote(note);
         });
 
@@ -186,7 +94,7 @@ const pages = {
         colorPicker.value = note.color;
         noteContent.value = note.content;
         noteContent.style.backgroundColor = note.color;
-        noteContent.style.textDecorationColor = hex2rgb(note.color);
+        noteContent.style.color = hex2rgb(note.color);
 
         saveButton.innerText = "save";
         saveButton.addEventListener("click", () => {
@@ -200,6 +108,19 @@ const pages = {
           });
         });
       } else {
+        const labelForImport = document.createElement("label");
+        labelForImport.setAttribute("for", "import-field");
+        labelForImport.classList.add("label-for-import");
+        labelForImport.innerText = "import";
+
+        const importField = document.createElement("input");
+        setAttributes(importField, { type: "file", id: "import-field" });
+        importField.addEventListener("change", () => {
+          importFileToNote();
+        });
+
+        container.append(labelForImport, importField);
+
         saveButton.innerText = "create";
         saveButton.addEventListener("click", () => {
           saveNote({
@@ -211,7 +132,7 @@ const pages = {
         });
       }
       header.append(titleInput, moveButton);
-      container.prepend(colorPicker, noteContent, saveButton, importField);
+      container.prepend(colorPicker, noteContent, saveButton);
     },
   },
 };

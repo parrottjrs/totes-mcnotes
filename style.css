@@ -6,6 +6,12 @@ body {
   margin: 0;
 }
 
+button,
+input {
+  cursor: pointer;
+  opacity: 100%;
+}
+
 /* ****** */
 /* header */
 /* ****** */
@@ -44,12 +50,15 @@ h1 {
   color: #001219;
   margin-left: 15px;
   height: 30px;
-  border-width: 2px;
   display: inline-block;
-  border-width: 2px;
+  border: 2px solid #0a9396;
   border-radius: 30px;
   font-size: 15px;
   background-color: #ee9b00;
+}
+
+.move-button:hover {
+  background-color: #94d2bd;
 }
 
 /* ******* */
@@ -74,7 +83,7 @@ section {
   justify-items: center;
 }
 
-.color-picker {
+#color-picker {
   margin: 10px auto;
   width: 100px;
 }
@@ -108,7 +117,7 @@ textarea {
   color: #001219;
   height: 30px;
   margin: 5px auto;
-  border-width: 2px;
+  border: 2px solid #005f73;
   border-radius: 30px;
   font-size: 15px;
 }
@@ -118,5 +127,31 @@ textarea {
 }
 
 .delete-button {
-  background-color: #ff2711;
+  background-color: #e5383b;
+}
+
+#import-field {
+  display: none;
+}
+
+.label-for-import {
+  font-family: Shantell Sans;
+  font-weight: 700;
+  color: #001219;
+  margin: 5px auto;
+  border: 2px solid #005f73;
+  border-radius: 30px;
+  font-size: 15px;
+  padding: 4px;
+  background-color: #ee9b00;
+  cursor: pointer;
+}
+
+.edit-button:hover,
+.label-for-import:hover {
+  background-color: #0a9396;
+}
+
+.delete-button:hover {
+  background-color: #ba181b;
 }
