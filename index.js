@@ -19,29 +19,39 @@ const pages = {
         importTotesMcNotes();
       });
 
+      // const sortMenu = document.createElement("select");
+      // sortMenu.setAttribute("id", "sort-menu");
+      // header.append(sortMenu);
+      // createSortMethod("Date Created: new to old");
+      // createSortMethod("Date Created: old to new");
+      // createSortMethod("Date Updated: new to old");
+      // createSortMethod("Date Updated: old to new");
+
       const noteButtonWrapper = document.createElement("div");
       noteButtonWrapper.classList.add("wrapper");
 
       header.append(headerText, moveButton, importButton, exportButton);
       container.append(noteButtonWrapper);
 
-      notes.map((note) => {
-        const noteElm = document.createElement("button");
-        noteElm.classList.add("note-button");
-        noteElm.style.backgroundColor = note.color;
+      notes
+        .sort((a, b) => (new Date(a.updated) > new Date(b.updated) ? -1 : 1))
+        .map((note) => {
+          const noteElm = document.createElement("button");
+          noteElm.classList.add("note-button");
+          noteElm.style.backgroundColor = note.color;
 
-        noteElm.addEventListener("click", () => {
-          clear();
-          pages.note.create(note);
+          noteElm.addEventListener("click", () => {
+            clear();
+            pages.note.create(note);
+          });
+
+          const noteTitle = document.createElement("p");
+          noteTitle.innerText = note.title;
+          noteTitle.style.color = hex2rgb(note.color);
+          noteElm.appendChild(noteTitle);
+
+          noteButtonWrapper.appendChild(noteElm);
         });
-
-        const noteTitle = document.createElement("p");
-        noteTitle.innerText = note.title;
-        noteTitle.style.color = hex2rgb(note.color);
-        noteElm.appendChild(noteTitle);
-
-        noteButtonWrapper.appendChild(noteElm);
-      });
     },
   },
   note: {
@@ -117,6 +127,7 @@ const pages = {
             content: noteContent.value,
             color: colorPicker.value,
             created: Date().toLocaleString(),
+            updated: Date().toLocaleString(),
           });
         });
       }

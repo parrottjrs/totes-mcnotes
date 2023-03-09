@@ -20,7 +20,7 @@ const saveNote = (updatedNote) => {
     }
     updatedNote.title = `${updatedNote.title}...`;
   }
-  if (existing) {
+  if (new Date(existing.updated) <= new Date(updatedNote.updated)) {
     existing.title = updatedNote.title;
     existing.content = updatedNote.content;
     existing.color = updatedNote.color;
@@ -81,7 +81,7 @@ const importTotesMcNotes = () => {
       () => {
         const newNotes = JSON.parse(reader.result);
         for (let i = 0; i < newNotes.length; i++) {
-          notes.push(newNotes[i]);
+          saveNote(newNotes[i]);
         }
         changePage("home");
       },
@@ -114,4 +114,28 @@ const setAttributes = (elm, attributes) => {
 const changePage = (pageKey, arg) => {
   clear();
   pages[pageKey].create(arg);
+};
+
+// const createSortMethod = (selection) => {
+//   const sortMenu = document.querySelector("#sort-menu");
+//   const option = document.createElement("option");
+//   option.setAttribute("value", selection);
+//   option.innerText = selection;
+//   sortMenu.append(option);
+// };
+
+const sortNotes = () => {
+  const sortMenu = document.querySelector("#sort-menu");
+  const sortMethod = sortMenu.value;
+  if (sortMethod === "Date Created: new to old") {
+    notes.sort((a, b) => (new Date(a.created) > new Date(b.created) ? -1 : 1));
+  } else if (sortMethod === "Date Created: old to new") {
+    notes.sort((a, b) => (new Date(a.created) < new Date(b.created) ? -1 : 1));
+  } else if (sortMethod === "Date Updated: new to old") {
+    notes.sort((a, b) => (new Date(a.updated) > new Date(b.updated) ? -1 : 1));
+  } else if (sortMethod === "Date Updated: old to new") {
+    notes.sort((a, b) => (new Date(a.updated) < new Date(b.updated) ? -1 : 1));
+  }
+  changePage("home");
+  sortMenu.click();
 };
