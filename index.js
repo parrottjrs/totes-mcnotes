@@ -11,10 +11,18 @@ const pages = {
         changePage("note")
       );
 
+      const exportButton = components.moveButton("export", () =>
+        exportNote(JSON.stringify(notes), "Totes McNotes")
+      );
+
+      const importButton = components.moveButton("import", () => {
+        importTotesMcNotes();
+      });
+
       const noteButtonWrapper = document.createElement("div");
       noteButtonWrapper.classList.add("wrapper");
 
-      header.append(headerText, moveButton);
+      header.append(headerText, moveButton, importButton, exportButton);
       container.append(noteButtonWrapper);
 
       notes.map((note) => {
@@ -63,7 +71,6 @@ const pages = {
         const noteContent = document.getElementById("note-content");
         noteContent.style.backgroundColor = colorPicker.value;
         noteContent.style.color = hex2rgb(colorPicker.value);
-        console.log(hex2rgb(colorPicker.value));
       });
 
       const noteContent = document.createElement("textarea");
@@ -83,12 +90,7 @@ const pages = {
           deleteNote(note);
         });
 
-        const exportButton = components.moveButton("export", () => {
-          exportNote(note.content, `${note.title}.txt`, "text/plain");
-        });
-        exportButton.classList.add("edit-button");
-
-        container.append(exportButton, deleteButton);
+        container.append(deleteButton);
 
         titleInput.value = note.title;
         colorPicker.value = note.color;
@@ -108,19 +110,6 @@ const pages = {
           });
         });
       } else {
-        const labelForImport = document.createElement("label");
-        labelForImport.setAttribute("for", "import-field");
-        labelForImport.classList.add("label-for-import");
-        labelForImport.innerText = "import";
-
-        const importField = document.createElement("input");
-        setAttributes(importField, { type: "file", id: "import-field" });
-        importField.addEventListener("change", () => {
-          importFileToNote();
-        });
-
-        container.append(labelForImport, importField);
-
         saveButton.innerText = "create";
         saveButton.addEventListener("click", () => {
           saveNote({

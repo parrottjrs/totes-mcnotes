@@ -11,23 +11,26 @@ const getNotes = () => {
 let notes = getNotes();
 
 const saveNote = (updatedNote) => {
-  if (updatedNote.title === "") {
-    alert("Your note needs a title!");
-  } else {
-    const existing = notes.find((note) => note.id == updatedNote.id);
+  const existing = notes.find((note) => note.id == updatedNote.id);
 
-    if (existing) {
-      existing.title = updatedNote.title;
-      existing.content = updatedNote.content;
-      existing.color = updatedNote.color;
-      existing.updated = updatedNote.updated;
-    } else {
-      updatedNote.id = Math.floor(Math.random() * 100000);
-      notes.push(updatedNote);
+  if (updatedNote.title === "") {
+    for (let i = 0; i < 20; i++) {
+      let preview = updatedNote.content;
+      updatedNote.title = updatedNote.title + `${preview[i]}`;
     }
-    localStorage.setItem("notes", JSON.stringify(notes));
-    changePage("home");
+    updatedNote.title = `${updatedNote.title}...`;
   }
+  if (existing) {
+    existing.title = updatedNote.title;
+    existing.content = updatedNote.content;
+    existing.color = updatedNote.color;
+    existing.updated = updatedNote.updated;
+  } else {
+    updatedNote.id = Math.floor(Math.random() * 100000);
+    notes.push(updatedNote);
+  }
+  localStorage.setItem("notes", JSON.stringify(notes));
+  changePage("home");
 };
 
 const deleteNote = (noteToDelete) => {
@@ -44,9 +47,9 @@ const clear = () => {
 
 const hex2rgb = (hex) => {
   const rgb = [
-    ("0x" + hex[1] + hex[2]) | 0,
-    ("0x" + hex[3] + hex[4]) | 0,
-    ("0x" + hex[5] + hex[6]) | 0,
+    `0x${hex[1]}${hex[2]}` | 0,
+    `0x${hex[3]}${hex[4]}` | 0,
+    `0x${hex[5]}${hex[6]}` | 0,
   ];
   if (rgb[0] + rgb[1] + rgb[2] <= 150) {
     return "#ffffff";
@@ -63,23 +66,33 @@ const exportNote = (content, fileName, contentType) => {
   noteToDownload.click();
 };
 
-const importFileToNote = () => {
-  noteToImport = document.querySelector("#import-field");
-  noteContent = document.querySelector("#note-content");
-  const [file] = noteToImport.files;
-  const reader = new FileReader();
+const importTotesMcNotes = () => {
+  const fileSelector = document.createElement("input");
+  setAttributes(fileSelector, { type: "file", id: "file-selector" });
+  container.append(fileSelector);
 
-  reader.addEventListener(
-    "load",
-    () => {
-      noteContent.innerText = reader.result;
-    },
-    false
-  );
+  fileSelector.addEventListener("change", () => {
+    const fileToImport = document.querySelector("#file-selector");
+    const [file] = fileToImport.files;
+    const reader = new FileReader();
 
-  if (file) {
-    reader.readAsText(file);
-  }
+    reader.addEventListener(
+      "load",
+      () => {
+        const newNotes = JSON.parse(reader.result);
+        for (let i = 0; i < newNotes.length; i++) {
+          notes.push(newNotes[i]);
+        }
+        changePage("home");
+      },
+      false
+    );
+
+    if (file) {
+      reader.readAsText(file);
+    }
+  });
+  fileSelector.click();
 };
 
 const components = {
