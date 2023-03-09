@@ -19,13 +19,23 @@ const pages = {
         importTotesMcNotes();
       });
 
-      // const sortMenu = document.createElement("select");
-      // sortMenu.setAttribute("id", "sort-menu");
-      // header.append(sortMenu);
-      // createSortMethod("Date Created: new to old");
-      // createSortMethod("Date Created: old to new");
-      // createSortMethod("Date Updated: new to old");
-      // createSortMethod("Date Updated: old to new");
+      const sortMenu = document.createElement("select");
+      sortMenu.setAttribute("id", "sort-menu");
+      sortMenu.addEventListener("change", () => {
+        sortNotes();
+      });
+      const labelForSortMenu = document.createElement("label");
+      setAttributes(labelForSortMenu, {
+        for: "#sort-menu",
+        class: "label-for-sort-menu",
+      });
+      labelForSortMenu.innerText = "Sort Notes By:";
+      container.append(labelForSortMenu, sortMenu);
+
+      createSortMethod("Date Updated: new to old");
+      createSortMethod("Date Updated: old to new");
+      createSortMethod("Date Created: new to old");
+      createSortMethod("Date Created: old to new");
 
       const noteButtonWrapper = document.createElement("div");
       noteButtonWrapper.classList.add("wrapper");
@@ -33,25 +43,23 @@ const pages = {
       header.append(headerText, moveButton, importButton, exportButton);
       container.append(noteButtonWrapper);
 
-      notes
-        .sort((a, b) => (new Date(a.updated) > new Date(b.updated) ? -1 : 1))
-        .map((note) => {
-          const noteElm = document.createElement("button");
-          noteElm.classList.add("note-button");
-          noteElm.style.backgroundColor = note.color;
+      notes.map((note) => {
+        const noteElm = document.createElement("button");
+        noteElm.classList.add("note-button");
+        noteElm.style.backgroundColor = note.color;
 
-          noteElm.addEventListener("click", () => {
-            clear();
-            pages.note.create(note);
-          });
-
-          const noteTitle = document.createElement("p");
-          noteTitle.innerText = note.title;
-          noteTitle.style.color = hex2rgb(note.color);
-          noteElm.appendChild(noteTitle);
-
-          noteButtonWrapper.appendChild(noteElm);
+        noteElm.addEventListener("click", () => {
+          clear();
+          pages.note.create(note);
         });
+
+        const noteTitle = document.createElement("p");
+        noteTitle.innerText = note.title;
+        noteTitle.style.color = hex2rgb(note.color);
+        noteElm.appendChild(noteTitle);
+
+        noteButtonWrapper.appendChild(noteElm);
+      });
     },
   },
   note: {

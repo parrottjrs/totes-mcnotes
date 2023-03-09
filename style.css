@@ -98,7 +98,9 @@ section {
   hyphens: manual;
 }
 
-.note-button p {
+.note-button p,
+#sort-menu,
+.label-for-sort-menu {
   font-family: Shantell Sans;
   font-weight: 700;
 }

@@ -14,7 +14,7 @@ const saveNote = (updatedNote) => {
   const existing = notes.find((note) => note.id == updatedNote.id);
 
   if (updatedNote.title === "") {
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < updatedNote.content.length; i++) {
       let preview = updatedNote.content;
       updatedNote.title = updatedNote.title + `${preview[i]}`;
     }
@@ -30,7 +30,7 @@ const saveNote = (updatedNote) => {
     }
   } else {
     updatedNote.id = Math.floor(Math.random() * 100000);
-    notes.push(updatedNote);
+    notes.unshift(updatedNote);
   }
   localStorage.setItem("notes", JSON.stringify(notes));
   changePage("home");
@@ -119,15 +119,16 @@ const changePage = (pageKey, arg) => {
   pages[pageKey].create(arg);
 };
 
-// const createSortMethod = (selection) => {
-//   const sortMenu = document.querySelector("#sort-menu");
-//   const option = document.createElement("option");
-//   option.setAttribute("value", selection);
-//   option.innerText = selection;
-//   sortMenu.append(option);
-// };
+const createSortMethod = (selection) => {
+  const sortMenu = document.querySelector("#sort-menu");
+  const option = document.createElement("option");
+  option.setAttribute("value", selection);
+  option.innerText = selection;
+  sortMenu.append(option);
+};
 
 const sortNotes = () => {
+  console.log(notes);
   const sortMenu = document.querySelector("#sort-menu");
   const sortMethod = sortMenu.value;
   if (sortMethod === "Date Created: new to old") {
@@ -138,7 +139,8 @@ const sortNotes = () => {
     notes.sort((a, b) => (new Date(a.updated) > new Date(b.updated) ? -1 : 1));
   } else if (sortMethod === "Date Updated: old to new") {
     notes.sort((a, b) => (new Date(a.updated) < new Date(b.updated) ? -1 : 1));
+  } else if (sortMethod === "Title: A-Z") {
+    notes.sort((a, b) => (a.title > b.title ? -1 : 1));
   }
   changePage("home");
-  sortMenu.click();
 };
