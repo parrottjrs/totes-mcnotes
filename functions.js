@@ -14,17 +14,20 @@ const saveNote = (updatedNote) => {
   const existing = notes.find((note) => note.id == updatedNote.id);
 
   if (updatedNote.title === "") {
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 25; i++) {
       let preview = updatedNote.content;
       updatedNote.title = updatedNote.title + `${preview[i]}`;
     }
     updatedNote.title = `${updatedNote.title}...`;
   }
-  if (new Date(existing.updated) <= new Date(updatedNote.updated)) {
-    existing.title = updatedNote.title;
-    existing.content = updatedNote.content;
-    existing.color = updatedNote.color;
-    existing.updated = updatedNote.updated;
+
+  if (existing) {
+    if (new Date(existing.updated) <= new Date(updatedNote.updated)) {
+      existing.title = updatedNote.title;
+      existing.content = updatedNote.content;
+      existing.color = updatedNote.color;
+      existing.updated = updatedNote.updated;
+    }
   } else {
     updatedNote.id = Math.floor(Math.random() * 100000);
     notes.push(updatedNote);

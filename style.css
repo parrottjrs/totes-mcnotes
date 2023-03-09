@@ -94,6 +94,8 @@ section {
   margin-top: 15px;
   border-width: 1px;
   font-size: 14px;
+  overflow-wrap: break-word;
+  hyphens: manual;
 }
 
 .note-button p {
