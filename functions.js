@@ -130,17 +130,37 @@ const createSortMethod = (selection) => {
 const sortNotes = () => {
   console.log(notes);
   const sortMenu = document.querySelector("#sort-menu");
-  const sortMethod = sortMenu.value;
-  if (sortMethod === "Date Created: new to old") {
+  const noteButtonWrapper = document.querySelector(".wrapper");
+
+  if (sortMenu.value === "Date Created: new to old") {
     notes.sort((a, b) => (new Date(a.created) > new Date(b.created) ? -1 : 1));
-  } else if (sortMethod === "Date Created: old to new") {
+  } else if (sortMenu.value === "Date Created: old to new") {
     notes.sort((a, b) => (new Date(a.created) < new Date(b.created) ? -1 : 1));
-  } else if (sortMethod === "Date Updated: new to old") {
+  } else if (sortMenu.value === "Date Updated: new to old") {
     notes.sort((a, b) => (new Date(a.updated) > new Date(b.updated) ? -1 : 1));
-  } else if (sortMethod === "Date Updated: old to new") {
+  } else if (sortMenu.value === "Date Updated: old to new") {
     notes.sort((a, b) => (new Date(a.updated) < new Date(b.updated) ? -1 : 1));
-  } else if (sortMethod === "Title: A-Z") {
-    notes.sort((a, b) => (a.title > b.title ? -1 : 1));
   }
-  changePage("home");
+  noteButtonWrapper.innerHTML = "";
+  createNoteButtons();
 };
+
+const createNoteButtons = () =>
+  notes.map((note) => {
+    const noteButtonWrapper = document.querySelector(".wrapper");
+    const noteElm = document.createElement("button");
+    noteElm.classList.add("note-button");
+    noteElm.style.backgroundColor = note.color;
+
+    noteElm.addEventListener("click", () => {
+      clear();
+      pages.note.create(note);
+    });
+
+    const noteTitle = document.createElement("p");
+    noteTitle.innerText = note.title;
+    noteTitle.style.color = hex2rgb(note.color);
+    noteElm.appendChild(noteTitle);
+
+    noteButtonWrapper.appendChild(noteElm);
+  });

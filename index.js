@@ -32,6 +32,7 @@ const pages = {
       labelForSortMenu.innerText = "Sort Notes By:";
       container.append(labelForSortMenu, sortMenu);
 
+      createSortMethod("<--select an option-->");
       createSortMethod("Date Updated: new to old");
       createSortMethod("Date Updated: old to new");
       createSortMethod("Date Created: new to old");
@@ -43,23 +44,7 @@ const pages = {
       header.append(headerText, moveButton, importButton, exportButton);
       container.append(noteButtonWrapper);
 
-      notes.map((note) => {
-        const noteElm = document.createElement("button");
-        noteElm.classList.add("note-button");
-        noteElm.style.backgroundColor = note.color;
-
-        noteElm.addEventListener("click", () => {
-          clear();
-          pages.note.create(note);
-        });
-
-        const noteTitle = document.createElement("p");
-        noteTitle.innerText = note.title;
-        noteTitle.style.color = hex2rgb(note.color);
-        noteElm.appendChild(noteTitle);
-
-        noteButtonWrapper.appendChild(noteElm);
-      });
+      createNoteButtons();
     },
   },
   note: {
