@@ -1,5 +1,9 @@
 const header = document.querySelector("#header");
 const container = document.querySelector("#container");
+const timeWrapper = document.createElement("div");
+timeWrapper.setAttribute("id", "time-wrapper");
+
+container.insertAdjacentElement("beforebegin", timeWrapper);
 
 const pages = {
   home: {
@@ -21,6 +25,7 @@ const pages = {
 
       const sortMenu = document.createElement("select");
       sortMenu.setAttribute("id", "sort-menu");
+      sortMenu.value = "<--select an option-->";
       sortMenu.addEventListener("change", () => {
         sortNotes();
       });
@@ -30,7 +35,7 @@ const pages = {
         class: "label-for-sort-menu",
       });
       labelForSortMenu.innerText = "Sort Notes By:";
-      container.append(labelForSortMenu, sortMenu);
+      timeWrapper.append(labelForSortMenu, sortMenu);
 
       createSortMethod("<--select an option-->");
       createSortMethod("Date Updated: new to old");
@@ -44,7 +49,7 @@ const pages = {
       header.append(headerText, moveButton, importButton, exportButton);
       container.append(noteButtonWrapper);
 
-      createNoteButtons();
+      sortNotes();
     },
   },
   note: {
@@ -76,28 +81,37 @@ const pages = {
         noteContent.style.color = hex2rgb(colorPicker.value);
       });
 
-      const noteContent = document.createElement("textarea");
-      setAttributes(noteContent, {
-        id: "note-content",
-        placeholder: "The most important thing I need to do is...",
-      });
-
+      const noteContent = document.createElement("div");
+      noteContent.setAttribute("id", "note-content");
       noteContent.style.backgroundColor = "#fffa5c";
       noteContent.style.color = "#000000";
 
+      container.append(noteContent);
+
+      const quill = new Quill(noteContent, { theme: "snow" });
+      const quillText = noteContent.querySelector("p");
+
+      const editor = document.querySelector(".ql-toolbar.ql-snow");
+      editor.style.backgroundColor = "#fffa5c";
+      editor.style.border = "0";
+
       if (note) {
+        const timeStamp = document.createElement("p");
+        timeStamp.innerText = `Created On: ${note.created} ---- Last Edit: ${note.updated}`;
+        timeStamp.classList.add("time-stamp");
+        timeWrapper.append(timeStamp);
+
         const deleteButton = document.createElement("button");
         deleteButton.classList.add("delete-button");
         deleteButton.innerText = "delete";
         deleteButton.addEventListener("click", () => {
           deleteNote(note);
         });
-
-        container.append(deleteButton);
+        container.append(saveButton, deleteButton);
 
         titleInput.value = note.title;
         colorPicker.value = note.color;
-        noteContent.value = note.content;
+        quillText.innerHTML = note.content;
         noteContent.style.backgroundColor = note.color;
         noteContent.style.color = hex2rgb(note.color);
 
@@ -106,10 +120,10 @@ const pages = {
           saveNote({
             id: note.id,
             title: titleInput.value,
-            content: noteContent.value,
+            content: quillText.innerHTML,
             color: colorPicker.value,
             created: note.created,
-            updated: Date().toLocaleString(),
+            updated: new Date().toLocaleString("en-US"),
           });
         });
       } else {
@@ -117,15 +131,16 @@ const pages = {
         saveButton.addEventListener("click", () => {
           saveNote({
             title: titleInput.value,
-            content: noteContent.value,
+            content: quillText.innerHTML,
             color: colorPicker.value,
-            created: Date().toLocaleString(),
-            updated: Date().toLocaleString(),
+            created: new Date().toLocaleString("en-US"),
+            updated: new Date().toLocaleString("en-US"),
           });
         });
+        container.append(saveButton);
       }
       header.append(titleInput, moveButton);
-      container.prepend(colorPicker, noteContent, saveButton);
+      container.prepend(colorPicker);
     },
   },
 };

@@ -12,17 +12,27 @@ input {
   opacity: 100%;
 }
 
-/* ****** */
-/* header */
-/* ****** */
-
 #header {
   background-color: #005f73;
-  height: 150px;
-  width: full;
+  height: 3em;
+  padding-top: 1em;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#time-wrapper {
+  height: 2em;
+  background-color: #005f73;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#time-wrapper p {
+  font-family: Shantell Sans;
+  font-weight: 700;
+  color: #001219;
 }
 
 h1 {
@@ -61,9 +71,9 @@ h1 {
   background-color: #94d2bd;
 }
 
-/* ******* */
-/* section */
-/* ******* */
+.label-for-sort-menu {
+  padding: 1em;
+}
 
 section {
   padding: 1rem;
@@ -105,13 +115,12 @@ section {
   font-weight: 700;
 }
 
-textarea {
-  display: block;
+#note-content {
   font-family: Shantell Sans;
   max-width: 100vw;
   max-width: 100vw;
-  width: 30rem;
-  height: 20rem;
+  width: 23.25rem;
+  height: 20.69rem;
 }
 
 .edit-button,

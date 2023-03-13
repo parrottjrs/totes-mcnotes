@@ -46,6 +46,7 @@ const deleteNote = (noteToDelete) => {
 const clear = () => {
   header.innerHTML = "";
   container.innerHTML = "";
+  timeWrapper.innerHTML = "";
 };
 
 const hex2rgb = (hex) => {
@@ -128,24 +129,23 @@ const createSortMethod = (selection) => {
 };
 
 const sortNotes = () => {
-  console.log(notes);
   const sortMenu = document.querySelector("#sort-menu");
   const noteButtonWrapper = document.querySelector(".wrapper");
 
-  if (sortMenu.value === "Date Created: new to old") {
+  if (
+    sortMenu.value === "Date Updated: new to old" ||
+    sortMenu.value === "<--select an option-->"
+  ) {
+    notes.sort((a, b) => (new Date(a.updated) > new Date(b.updated) ? -1 : 1));
+  } else if (sortMenu.value === "Date Created: new to old") {
     notes.sort((a, b) => (new Date(a.created) > new Date(b.created) ? -1 : 1));
   } else if (sortMenu.value === "Date Created: old to new") {
     notes.sort((a, b) => (new Date(a.created) < new Date(b.created) ? -1 : 1));
-  } else if (sortMenu.value === "Date Updated: new to old") {
-    notes.sort((a, b) => (new Date(a.updated) > new Date(b.updated) ? -1 : 1));
   } else if (sortMenu.value === "Date Updated: old to new") {
     notes.sort((a, b) => (new Date(a.updated) < new Date(b.updated) ? -1 : 1));
   }
   noteButtonWrapper.innerHTML = "";
-  createNoteButtons();
-};
 
-const createNoteButtons = () =>
   notes.map((note) => {
     const noteButtonWrapper = document.querySelector(".wrapper");
     const noteElm = document.createElement("button");
@@ -160,7 +160,9 @@ const createNoteButtons = () =>
     const noteTitle = document.createElement("p");
     noteTitle.innerText = note.title;
     noteTitle.style.color = hex2rgb(note.color);
+
     noteElm.appendChild(noteTitle);
 
     noteButtonWrapper.appendChild(noteElm);
   });
+};
