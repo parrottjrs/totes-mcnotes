@@ -68,19 +68,6 @@ const pages = {
       const saveButton = document.createElement("button");
       saveButton.classList.add("edit-button");
 
-      const colorPicker = document.createElement("input");
-      setAttributes(colorPicker, {
-        id: "color-picker",
-        type: "color",
-        value: "#fffa5c",
-      });
-      colorPicker.addEventListener("change", () => {
-        const colorPicker = document.getElementById("color-picker");
-        const noteContent = document.getElementById("note-content");
-        noteContent.style.backgroundColor = colorPicker.value;
-        noteContent.style.color = hex2rgb(colorPicker.value);
-      });
-
       const noteContent = document.createElement("div");
       noteContent.setAttribute("id", "note-content");
       noteContent.style.backgroundColor = "#fffa5c";
@@ -94,6 +81,20 @@ const pages = {
       const editor = document.querySelector(".ql-toolbar.ql-snow");
       editor.style.backgroundColor = "#fffa5c";
       editor.style.border = "0";
+
+      const colorPicker = document.createElement("input");
+      setAttributes(colorPicker, {
+        id: "color-picker",
+        type: "color",
+        value: "#fffa5c",
+      });
+      colorPicker.addEventListener("change", () => {
+        const colorPicker = document.getElementById("color-picker");
+        const noteContent = document.getElementById("note-content");
+        noteContent.style.backgroundColor = colorPicker.value;
+        noteContent.style.color = hex2rgb(colorPicker.value);
+        editor.style.backgroundColor = colorPicker.value;
+      });
 
       if (note) {
         const timeStamp = document.createElement("p");
@@ -112,6 +113,7 @@ const pages = {
         titleInput.value = note.title;
         colorPicker.value = note.color;
         quillText.innerHTML = note.content;
+        editor.style.backgroundColor = note.color;
         noteContent.style.backgroundColor = note.color;
         noteContent.style.color = hex2rgb(note.color);
 
