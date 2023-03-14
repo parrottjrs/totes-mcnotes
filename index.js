@@ -106,6 +106,7 @@ const pages = {
         deleteButton.classList.add("delete-button");
         deleteButton.innerText = "delete";
         deleteButton.addEventListener("click", () => {
+          trashNote(note);
           deleteNote(note);
         });
         container.append(saveButton, deleteButton);

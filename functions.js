@@ -43,6 +43,24 @@ const deleteNote = (noteToDelete) => {
   changePage("home");
 };
 
+const getDeletedNotes = () => {
+  const maybeNotes = localStorage.getItem("deleted-notes");
+
+  if (maybeNotes === null) {
+    return [];
+  } else {
+    return JSON.parse(maybeNotes);
+  }
+};
+
+let deletedNotes = getDeletedNotes();
+
+const trashNote = (deletedNote) => {
+  deletedNotes.unshift(deletedNote);
+
+  localStorage.setItem("deletedNotes", JSON.stringify(deletedNotes));
+};
+
 const clear = () => {
   header.innerHTML = "";
   container.innerHTML = "";

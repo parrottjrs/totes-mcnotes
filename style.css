@@ -39,9 +39,7 @@ h1 {
   font-family: Shantell Sans;
   font-weight: 700;
   color: #001219;
-  font-size: 45px;
-  margin-left: 50px;
-  padding-bottom: 7px;
+  font-size: 3rem;
   display: inline-block;
 }
 
@@ -51,6 +49,9 @@ h1 {
   font-family: Shantell Sans;
   height: 2rem;
   width: 20rem;
+  border-radius: 2em;
+  padding-left: 1em;
+  font-size: 1em;
   max-width: 100vw;
 }
 
