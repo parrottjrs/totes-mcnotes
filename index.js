@@ -146,4 +146,40 @@ const pages = {
       container.prepend(colorPicker);
     },
   },
+  trash: {
+    create() {
+      const headerText = document.createElement("h1");
+      headerText.innerText = "Trash";
+
+      const moveButton = components.moveButton("back", () =>
+        changePage("home")
+      );
+
+      const noteButtonWrapper = document.createElement("div");
+      noteButtonWrapper.classList.add("wrapper");
+
+      header.append(headerText, moveButton);
+      container.append(noteButtonWrapper);
+
+      deletedNotes.map((note) => {
+        const noteButtonWrapper = document.querySelector(".wrapper");
+        const noteElm = document.createElement("button");
+        noteElm.classList.add("note-button");
+        noteElm.style.backgroundColor = note.color;
+
+        noteElm.addEventListener("click", () => {
+          clear();
+          pages.note.create(note);
+        });
+
+        const noteTitle = document.createElement("p");
+        noteTitle.innerText = note.title;
+        noteTitle.style.color = hex2rgb(note.color);
+
+        noteElm.appendChild(noteTitle);
+
+        noteButtonWrapper.appendChild(noteElm);
+      });
+    },
+  },
 };
