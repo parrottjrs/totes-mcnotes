@@ -7,7 +7,7 @@ container.insertAdjacentElement("beforebegin", timeWrapper);
 
 const pages = {
   home: {
-    create() {
+    create(mode) {
       const headerText = document.createElement("h1");
       headerText.innerText = "Notes";
 
@@ -22,34 +22,48 @@ const pages = {
       const importButton = components.moveButton("import", () => {
         importTotesMcNotes();
       });
-
-      const sortMenu = document.createElement("select");
-      sortMenu.setAttribute("id", "sort-menu");
-      sortMenu.value = "<--select an option-->";
-      sortMenu.addEventListener("change", () => {
-        sortNotes();
-      });
-      const labelForSortMenu = document.createElement("label");
-      setAttributes(labelForSortMenu, {
-        for: "#sort-menu",
-        class: "label-for-sort-menu",
-      });
-      labelForSortMenu.innerText = "Sort Notes By:";
-      timeWrapper.append(labelForSortMenu, sortMenu);
-
-      createSortMethod("<--select an option-->");
-      createSortMethod("Date Updated: new to old");
-      createSortMethod("Date Updated: old to new");
-      createSortMethod("Date Created: new to old");
-      createSortMethod("Date Created: old to new");
-
-      const noteButtonWrapper = document.createElement("div");
-      noteButtonWrapper.classList.add("wrapper");
-
       header.append(headerText, moveButton, importButton, exportButton);
-      container.append(noteButtonWrapper);
 
-      sortNotes();
+      if (mode === "list") {
+        const sortMenu = document.createElement("select");
+        sortMenu.setAttribute("id", "sort-menu");
+        sortMenu.value = "<--select an option-->";
+        sortMenu.addEventListener("change", () => {
+          sortNotes();
+        });
+        const labelForSortMenu = document.createElement("label");
+        setAttributes(labelForSortMenu, {
+          for: "#sort-menu",
+          class: "label-for-sort-menu",
+        });
+        labelForSortMenu.innerText = "Sort Notes By:";
+        timeWrapper.append(labelForSortMenu, sortMenu);
+
+        createSortMethod("<--select an option-->");
+        createSortMethod("Date Updated: new to old");
+        createSortMethod("Date Updated: old to new");
+        createSortMethod("Date Created: new to old");
+        createSortMethod("Date Created: old to new");
+
+        const noteButtonWrapper = document.createElement("div");
+        noteButtonWrapper.classList.add("wrapper");
+
+        header.append(headerText, moveButton, importButton, exportButton);
+        container.append(noteButtonWrapper);
+
+        sortNotes();
+      } else {
+        const canvas = document.createElement("canvas");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight - header.clientHeight;
+        const c = canvas.getContext("2d");
+        container.append(canvas);
+
+        const canvasNotes = notes.map((note) =>
+          CanvasNote(canvas, c, ...notes)
+        );
+        canvasNotes.forEach((note) => note.update());
+      }
     },
   },
   note: {
@@ -127,6 +141,8 @@ const pages = {
             color: colorPicker.value,
             created: note.created,
             updated: new Date().toLocaleString("en-US"),
+            x: 0,
+            y: 0,
           });
         });
       } else {
