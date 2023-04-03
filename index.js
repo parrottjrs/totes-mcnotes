@@ -2,8 +2,9 @@ const header = document.querySelector("#header");
 const container = document.querySelector("#container");
 const timeWrapper = document.createElement("div");
 timeWrapper.setAttribute("id", "time-wrapper");
-
 container.insertAdjacentElement("beforebegin", timeWrapper);
+
+let currentMode = undefined;
 
 const pages = {
   home: {
@@ -22,9 +23,26 @@ const pages = {
       const importButton = components.moveButton("import", () => {
         importTotesMcNotes();
       });
-      header.append(headerText, moveButton, importButton, exportButton);
 
-      if (mode === "list") {
+      const modeButton = components.moveButton("change mode", () => {
+        if (currentMode === "grid") {
+          changePage("home", "canvas");
+        } else {
+          changePage("home", "grid");
+        }
+      });
+
+      header.append(
+        headerText,
+        moveButton,
+        importButton,
+        exportButton,
+        modeButton
+      );
+
+      if (mode === "grid") {
+        currentMode = "grid";
+
         const sortMenu = document.createElement("select");
         sortMenu.setAttribute("id", "sort-menu");
         sortMenu.value = "<--select an option-->";
@@ -48,11 +66,12 @@ const pages = {
         const noteButtonWrapper = document.createElement("div");
         noteButtonWrapper.classList.add("wrapper");
 
-        header.append(headerText, moveButton, importButton, exportButton);
         container.append(noteButtonWrapper);
 
         sortNotes();
       } else {
+        currentMode = "canvas";
+
         const canvas = document.createElement("canvas");
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight - header.clientHeight;
@@ -62,15 +81,83 @@ const pages = {
         const canvasNotes = notes.map((note) =>
           CanvasNote(canvas, c, ...notes)
         );
-        canvasNotes.forEach((note) => note.update());
+
+        let currentNote = undefined;
+        let start = { x: undefined, y: undefined };
+        let mouse = { x: undefined, y: undefined };
+        let direction = { x: undefined, y: undefined };
+
+        canvas.addEventListener("mousedown", (event) => {
+          event.preventDefault();
+
+          start.x = event.clientX;
+          start.y = event.clientY - header.clientHeight;
+
+          const canvasNote = canvasNoteFromCoords(
+            canvasNotes,
+            start.x,
+            start.y
+          );
+          currentNote = canvasNote;
+        });
+
+        canvas.addEventListener("mouseup", (event) => {
+          if (!currentNote) {
+            return;
+          }
+          event.preventDefault();
+          currentNote = undefined;
+        });
+
+        canvas.addEventListener("mousemove", (event) => {
+          if (!currentNote) {
+            return;
+          }
+          event.preventDefault();
+
+          mouse.x = event.clientX;
+          mouse.y = event.clientY - header.clientHeight;
+
+          direction.x = mouse.x - start.x;
+          direction.y = mouse.y - start.y;
+
+          currentNote.note.x += direction.x;
+          currentNote.note.y += direction.y;
+
+          currentNote.update();
+
+          start.x = mouse.x;
+          start.y = mouse.y;
+        });
+
+        window.addEventListener("resize", () => {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+          animate();
+        });
+
+        const animate = () => {
+          const animationID = requestAnimationFrame(animate);
+
+          c.clearRect(0, 0, innerWidth, innerHeight);
+
+          for (let i = 0; i < canvasNotes.length; i++) {
+            canvasNotes[i].update();
+          }
+        };
+        animate();
       }
     },
   },
   note: {
     create(note) {
-      const moveButton = components.moveButton("back", () =>
-        changePage("home")
-      );
+      const moveButton = components.moveButton("back", () => {
+        if (currentMode === "grid") {
+          changePage("home", "grid");
+        } else {
+          changePage("home", "canvas");
+        }
+      });
 
       const titleInput = document.createElement("input");
       setAttributes(titleInput, {
@@ -141,8 +228,6 @@ const pages = {
             color: colorPicker.value,
             created: note.created,
             updated: new Date().toLocaleString("en-US"),
-            x: 0,
-            y: 0,
           });
         });
       } else {
@@ -154,6 +239,10 @@ const pages = {
             color: colorPicker.value,
             created: new Date().toLocaleString("en-US"),
             updated: new Date().toLocaleString("en-US"),
+            x: 0,
+            y: 0,
+            width: 100,
+            height: 100,
           });
         });
         container.append(saveButton);

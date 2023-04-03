@@ -27,6 +27,8 @@ const saveNote = (updatedNote) => {
       existing.content = updatedNote.content;
       existing.color = updatedNote.color;
       existing.updated = updatedNote.updated;
+      existing.x = updatedNote.x;
+      existing.y = updatedNote.y;
     }
   } else {
     updatedNote.id = Math.floor(Math.random() * 100000);
@@ -133,9 +135,9 @@ const setAttributes = (elm, attributes) => {
   }
 };
 
-const changePage = (pageKey, arg) => {
+const changePage = (pageKey, mode) => {
   clear();
-  pages[pageKey].create(arg);
+  pages[pageKey].create(mode);
 };
 
 const createSortMethod = (selection) => {
