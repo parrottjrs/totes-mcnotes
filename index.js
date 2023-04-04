@@ -74,15 +74,15 @@ const pages = {
 
         const canvas = document.createElement("canvas");
         canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight - header.clientHeight;
+        canvas.height =
+          window.innerHeight - header.clientHeight - timeWrapper.clientHeight;
         const c = canvas.getContext("2d");
         container.append(canvas);
 
-        const canvasNotes = notes.map((note) =>
-          CanvasNote(canvas, c, ...notes)
-        );
+        const canvasNotes = notes.map((note) => CanvasNote(canvas, c, note));
 
         let currentNote = undefined;
+
         let start = { x: undefined, y: undefined };
         let mouse = { x: undefined, y: undefined };
         let direction = { x: undefined, y: undefined };
@@ -91,7 +91,8 @@ const pages = {
           event.preventDefault();
 
           start.x = event.clientX;
-          start.y = event.clientY - header.clientHeight;
+          start.y =
+            event.clientY - header.clientHeight - timeWrapper.clientHeight;
 
           const canvasNote = canvasNoteFromCoords(
             canvasNotes,
@@ -99,6 +100,9 @@ const pages = {
             start.y
           );
           currentNote = canvasNote;
+          canvasNotes.push(
+            canvasNotes.splice(canvasNotes.indexOf(currentNote), 1)[0]
+          );
         });
 
         canvas.addEventListener("mouseup", (event) => {
@@ -106,6 +110,20 @@ const pages = {
             return;
           }
           event.preventDefault();
+          saveNote({
+            id: currentNote.note.id,
+            x: currentNote.note.x,
+            y: currentNote.note.y,
+          });
+          if (
+            start.x < currentNote.note.x + 14 &&
+            start.x > currentNote.note.x &&
+            start.y < currentNote.note.y + 14 &&
+            start.y > currentNote.note.y
+          ) {
+            clear();
+            pages.note.create(currentNote.note);
+          }
           currentNote = undefined;
         });
 
@@ -116,7 +134,8 @@ const pages = {
           event.preventDefault();
 
           mouse.x = event.clientX;
-          mouse.y = event.clientY - header.clientHeight;
+          mouse.y =
+            event.clientY - header.clientHeight - timeWrapper.clientHeight;
 
           direction.x = mouse.x - start.x;
           direction.y = mouse.y - start.y;
@@ -228,6 +247,10 @@ const pages = {
             color: colorPicker.value,
             created: note.created,
             updated: new Date().toLocaleString("en-US"),
+            x: note.x,
+            y: note.y,
+            width: note.width,
+            height: note.height,
           });
         });
       } else {

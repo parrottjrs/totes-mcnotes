@@ -35,15 +35,6 @@ const CanvasNote = (canvas, c, note) => {
   };
 };
 
-const getDistance = (x1, x2, width, y1, y2, height) => {
-  const distanceX1 = x2 - (x1 + width);
-  const distanceX2 = x1 - (x2 + width);
-  const distanceY1 = y2 - (y1 + height);
-  const distanceY2 = y1 - (y2 + height);
-
-  return { distanceX1, distanceX2, distanceY1, distanceY2 };
-};
-
 const canvasNoteFromCoords = (canvasNotes, x, y) => {
   return [...canvasNotes]
     .reverse()

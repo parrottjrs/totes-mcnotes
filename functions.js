@@ -35,14 +35,22 @@ const saveNote = (updatedNote) => {
     notes.unshift(updatedNote);
   }
   localStorage.setItem("notes", JSON.stringify(notes));
-  changePage("home");
+  if (currentMode === "grid") {
+    changePage("home", "grid");
+  } else {
+    changePage("home", "canvas");
+  }
 };
 
 const deleteNote = (noteToDelete) => {
   notes = notes.filter((note) => note.id != noteToDelete.id);
 
   localStorage.setItem("notes", JSON.stringify(notes));
-  changePage("home");
+  if (currentMode === "grid") {
+    changePage("home", "grid");
+  } else {
+    changePage("home", "canvas");
+  }
 };
 
 const getDeletedNotes = () => {
@@ -185,4 +193,8 @@ const sortNotes = () => {
 
     noteButtonWrapper.appendChild(noteElm);
   });
+};
+
+const canvasNoteToTop = () => {
+  canvasNotes.push(canvasNotes.splice(canvasNotes.indexOf(currentNote), 1)[0]);
 };
