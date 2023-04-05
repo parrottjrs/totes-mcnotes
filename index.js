@@ -70,6 +70,10 @@ const pages = {
 
         sortNotes();
       } else {
+        notes = notes.sort((a, b) =>
+          new Date(a.moved) < new Date(b.moved) ? -1 : 1
+        );
+
         currentMode = "canvas";
 
         const canvas = document.createElement("canvas");
@@ -112,6 +116,9 @@ const pages = {
           event.preventDefault();
           saveNote({
             id: currentNote.note.id,
+            moved: (currentNote.note.moved = new Date().toLocaleString(
+              "en-US"
+            )),
             x: currentNote.note.x,
             y: currentNote.note.y,
           });
@@ -124,6 +131,7 @@ const pages = {
             clear();
             pages.note.create(currentNote.note);
           }
+
           currentNote = undefined;
         });
 
@@ -156,7 +164,7 @@ const pages = {
         });
 
         const animate = () => {
-          const animationID = requestAnimationFrame(animate);
+          requestAnimationFrame(animate);
 
           c.clearRect(0, 0, innerWidth, innerHeight);
 
@@ -171,11 +179,7 @@ const pages = {
   note: {
     create(note) {
       const moveButton = components.moveButton("back", () => {
-        if (currentMode === "grid") {
-          changePage("home", "grid");
-        } else {
-          changePage("home", "canvas");
-        }
+        changePage("home", currentMode);
       });
 
       const titleInput = document.createElement("input");
@@ -196,7 +200,6 @@ const pages = {
       container.append(noteContent);
 
       const quill = new Quill(noteContent, { theme: "snow" });
-      const quillText = noteContent.querySelector("p");
 
       const editor = document.querySelector(".ql-toolbar.ql-snow");
       editor.style.backgroundColor = "#fffa5c";
@@ -233,7 +236,7 @@ const pages = {
 
         titleInput.value = note.title;
         colorPicker.value = note.color;
-        quillText.innerHTML = note.content;
+        quill.setContents(note.content);
         editor.style.backgroundColor = note.color;
         noteContent.style.backgroundColor = note.color;
         noteContent.style.color = hex2rgb(note.color);
@@ -243,30 +246,34 @@ const pages = {
           saveNote({
             id: note.id,
             title: titleInput.value,
-            content: quillText.innerHTML,
+            content: quill.getContents().ops,
             color: colorPicker.value,
             created: note.created,
             updated: new Date().toLocaleString("en-US"),
+            moved: note.moved,
             x: note.x,
             y: note.y,
             width: note.width,
             height: note.height,
           });
+          changePage("home", currentMode);
         });
       } else {
         saveButton.innerText = "create";
         saveButton.addEventListener("click", () => {
           saveNote({
             title: titleInput.value,
-            content: quillText.innerHTML,
+            content: quill.getContents().ops,
             color: colorPicker.value,
             created: new Date().toLocaleString("en-US"),
             updated: new Date().toLocaleString("en-US"),
+            moved: new Date().toLocaleString("en-US"),
             x: 0,
             y: 0,
             width: 100,
             height: 100,
           });
+          changePage("home", currentMode);
         });
         container.append(saveButton);
       }

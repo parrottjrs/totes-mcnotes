@@ -10,20 +10,26 @@ const getNotes = () => {
 
 let notes = getNotes();
 
+const getNoteTitle = (note) => {
+  if (note.title === "") {
+    let title = "";
+    let preview = note.content[0].insert;
+    console.log(note.content[0].insert);
+    for (let i = 0; i < preview.length; i++) {
+      title += `${preview[i]}`;
+    }
+    console.log(note.content[0].insert);
+    return `${title}...`;
+  }
+  return note.title;
+};
+
 const saveNote = (updatedNote) => {
   const existing = notes.find((note) => note.id == updatedNote.id);
 
-  if (updatedNote.title === "") {
-    for (let i = 0; i < updatedNote.content.length; i++) {
-      let preview = updatedNote.content;
-      updatedNote.title = updatedNote.title + `${preview[i]}`;
-    }
-    updatedNote.title = `${updatedNote.title}...`;
-  }
-
   if (existing) {
     if (new Date(existing.updated) <= new Date(updatedNote.updated)) {
-      existing.title = updatedNote.title;
+      existing.title = getNoteTitle(updatedNote);
       existing.content = updatedNote.content;
       existing.color = updatedNote.color;
       existing.updated = updatedNote.updated;
@@ -35,11 +41,6 @@ const saveNote = (updatedNote) => {
     notes.unshift(updatedNote);
   }
   localStorage.setItem("notes", JSON.stringify(notes));
-  if (currentMode === "grid") {
-    changePage("home", "grid");
-  } else {
-    changePage("home", "canvas");
-  }
 };
 
 const deleteNote = (noteToDelete) => {
@@ -193,8 +194,4 @@ const sortNotes = () => {
 
     noteButtonWrapper.appendChild(noteElm);
   });
-};
-
-const canvasNoteToTop = () => {
-  canvasNotes.push(canvasNotes.splice(canvasNotes.indexOf(currentNote), 1)[0]);
 };

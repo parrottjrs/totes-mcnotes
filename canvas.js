@@ -1,7 +1,3 @@
-const NOTE_SIZE = 100;
-const NOTE_WIDTH = NOTE_SIZE;
-const NOTE_HEIGHT = NOTE_SIZE;
-
 const CanvasNote = (canvas, c, note) => {
   const draw = () => {
     c.beginPath();
@@ -17,14 +13,14 @@ const CanvasNote = (canvas, c, note) => {
     if (note.x < 0) {
       note.x = -note.x;
     }
-    if (note.x + NOTE_WIDTH > window.innerWidth) {
+    if (note.x + note.width > window.innerWidth) {
       note.x = window.innerWidth - note.width;
     }
     if (note.y < 0) {
       note.y = -note.y;
     }
-    if (note.y + NOTE_HEIGHT > window.innerHeight) {
-      note.y = window.innerHeight - NOTE_HEIGHT;
+    if (note.y + note.height > window.innerHeight) {
+      note.y = window.innerHeight - note.height;
     }
     draw();
   };
@@ -40,9 +36,9 @@ const canvasNoteFromCoords = (canvasNotes, x, y) => {
     .reverse()
     .find(
       ({ note }) =>
-        x < note.x + NOTE_WIDTH &&
+        x < note.x + note.width &&
         x > note.x &&
-        y < note.y + NOTE_HEIGHT &&
+        y < note.y + note.height &&
         y > note.y
     );
 };
