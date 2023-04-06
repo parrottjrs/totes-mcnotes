@@ -4,11 +4,15 @@ const timeWrapper = document.createElement("div");
 timeWrapper.setAttribute("id", "time-wrapper");
 container.insertAdjacentElement("beforebegin", timeWrapper);
 
-let currentMode = undefined;
+let currentMode = localStorage.currentMode;
 
 const pages = {
   home: {
     create(mode) {
+      if (localStorage.length === 0) {
+        mode = "grid";
+      }
+
       const headerText = document.createElement("h1");
       headerText.innerText = "Notes";
 
@@ -26,9 +30,11 @@ const pages = {
 
       const modeButton = components.moveButton("change mode", () => {
         if (currentMode === "grid") {
-          changePage("home", "canvas");
+          setCurrentMode("canvas");
+          changePage("home", currentMode);
         } else {
-          changePage("home", "grid");
+          setCurrentMode("grid");
+          changePage("home", currentMode);
         }
       });
 
@@ -41,8 +47,6 @@ const pages = {
       );
 
       if (mode === "grid") {
-        currentMode = "grid";
-
         const sortMenu = document.createElement("select");
         sortMenu.setAttribute("id", "sort-menu");
         sortMenu.value = "<--select an option-->";
@@ -73,8 +77,6 @@ const pages = {
         notes = notes.sort((a, b) =>
           new Date(a.moved) < new Date(b.moved) ? -1 : 1
         );
-
-        currentMode = "canvas";
 
         const canvas = document.createElement("canvas");
         canvas.width = window.innerWidth;
@@ -172,6 +174,12 @@ const pages = {
             canvasNotes[i].update();
           }
         };
+        const cancelAnimationFrame = () => {
+          window.cancelAnimationFrame;
+        };
+        if (canvasNotes === []) {
+          cancelAnimationFrame;
+        }
         animate();
       }
     },
@@ -287,7 +295,7 @@ const pages = {
       headerText.innerText = "Trash";
 
       const moveButton = components.moveButton("back", () =>
-        changePage("home")
+        changePage("home", currentMode)
       );
 
       const noteButtonWrapper = document.createElement("div");

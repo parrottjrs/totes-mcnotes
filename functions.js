@@ -49,9 +49,9 @@ const deleteNote = (noteToDelete) => {
 
   localStorage.setItem("notes", JSON.stringify(notes));
   if (currentMode === "grid") {
-    changePage("home", "grid");
+    changePage("home", currentMode);
   } else {
-    changePage("home", "canvas");
+    changePage("home", currentMode);
   }
 };
 
@@ -118,9 +118,9 @@ const importTotesMcNotes = () => {
           saveNote(newNotes[i]);
         }
         if (currentMode === "grid") {
-          changePage("home", "grid");
+          changePage("home", currentMode);
         } else {
-          changePage("home", "canvas");
+          changePage("home", currentMode);
         }
       },
       false
@@ -199,4 +199,9 @@ const sortNotes = () => {
 
     noteButtonWrapper.appendChild(noteElm);
   });
+};
+
+const setCurrentMode = (mode = "grid") => {
+  localStorage.setItem("currentMode", mode);
+  currentMode = mode;
 };
