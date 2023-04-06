@@ -29,7 +29,7 @@ const saveNote = (updatedNote) => {
 
   if (existing) {
     if (new Date(existing.updated) <= new Date(updatedNote.updated)) {
-      existing.title = getNoteTitle(updatedNote);
+      existing.title = updatedNote.title;
       existing.content = updatedNote.content;
       existing.color = updatedNote.color;
       existing.updated = updatedNote.updated;
@@ -37,6 +37,7 @@ const saveNote = (updatedNote) => {
       existing.y = updatedNote.y;
     }
   } else {
+    updatedNote.title = getNoteTitle(updatedNote);
     updatedNote.id = Math.floor(Math.random() * 100000);
     notes.unshift(updatedNote);
   }
@@ -116,7 +117,11 @@ const importTotesMcNotes = () => {
         for (let i = 0; i < newNotes.length; i++) {
           saveNote(newNotes[i]);
         }
-        changePage("home");
+        if (currentMode === "grid") {
+          changePage("home", "grid");
+        } else {
+          changePage("home", "canvas");
+        }
       },
       false
     );

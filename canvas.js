@@ -6,7 +6,22 @@ const CanvasNote = (canvas, c, note) => {
     c.strokeRect(note.x, note.y, note.width, note.height);
     c.font = "20px arial";
     c.fillStyle = hex2rgb(note.color);
-    c.fillText("+", note.x + 3, note.y + 17);
+    c.fillText("+", note.x + 8, note.y + 17);
+    c.font = "12px Shantell Sans";
+    c.textAlign = "center";
+
+    let wrappedTitle = wrapText(
+      c,
+      note.title,
+      note.x + note.width / 2,
+      note.y + note.height / 3,
+      note.width - 10,
+      15
+    );
+
+    wrappedTitle.forEach(function (item) {
+      c.fillText(item[0], item[1], item[2]);
+    });
   };
 
   const update = () => {
@@ -41,4 +56,30 @@ const canvasNoteFromCoords = (canvasNotes, x, y) => {
         y < note.y + note.height &&
         y > note.y
     );
+};
+
+const wrapText = (c, text, x, y, maxWidth, lineHeight) => {
+  let words = text.split(" ");
+  let line = "";
+  let testLine = "";
+  let lineArray = [];
+
+  for (let i = 0; i < words.length; i++) {
+    testLine += `${words[i]} `;
+    let metrics = c.measureText(testLine);
+    let testWidth = metrics.width;
+
+    if (testWidth > maxWidth && i > 0) {
+      lineArray.push([line, x, y]);
+      y += lineHeight;
+      line = `${words[i]} `;
+      testLine = `${words[i]} `;
+    } else {
+      line += `${words[i]} `;
+    }
+    if (i === words.length - 1) {
+      lineArray.push([line, x, y]);
+    }
+  }
+  return lineArray;
 };
