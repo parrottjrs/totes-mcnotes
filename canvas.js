@@ -1,3 +1,5 @@
+const MAX_LINES_KEY = 5;
+
 const CanvasNote = (canvas, c, note) => {
   const draw = () => {
     c.beginPath();
@@ -14,7 +16,7 @@ const CanvasNote = (canvas, c, note) => {
       c,
       note.title,
       note.x + note.width / 2,
-      note.y + note.height / 3,
+      note.y + note.height / 4,
       note.width - 10,
       15
     );
@@ -79,6 +81,10 @@ const wrapText = (c, text, x, y, maxWidth, lineHeight) => {
     }
     if (i === words.length - 1) {
       lineArray.push([line, x, y]);
+    }
+    if (lineArray.length === MAX_LINES_KEY) {
+      lineArray.push(["...", x, y]);
+      return lineArray;
     }
   }
   return lineArray;

@@ -14,11 +14,9 @@ const getNoteTitle = (note) => {
   if (note.title === "") {
     let title = "";
     let preview = note.content[0].insert;
-    console.log(note.content[0].insert);
     for (let i = 0; i < preview.length; i++) {
       title += `${preview[i]}`;
     }
-    console.log(note.content[0].insert);
     return `${title}...`;
   }
   return note.title;
@@ -204,4 +202,20 @@ const sortNotes = () => {
 const setCurrentMode = (mode = "grid") => {
   localStorage.setItem("currentMode", mode);
   currentMode = mode;
+};
+
+const createIntroNote = () => {
+  if (notes.length === 0 && deletedNotes.length === 0)
+    saveNote({
+      title: "Click Me!",
+      content: [{ insert: "Hello World!\n" }],
+      color: NOTE_COLOR,
+      created: new Date().toLocaleString("en-US"),
+      updated: new Date().toLocaleString("en-US"),
+      moved: new Date().toLocaleString("en-US"),
+      x: NOTE_HEIGHT,
+      y: NOTE_SIZE,
+      width: NOTE_WIDTH,
+      height: NOTE_HEIGHT,
+    });
 };

@@ -4,14 +4,22 @@ const timeWrapper = document.createElement("div");
 timeWrapper.setAttribute("id", "time-wrapper");
 container.insertAdjacentElement("beforebegin", timeWrapper);
 
+const NOTE_COLOR = "#fffa5c";
+const NOTE_X = 0;
+const NOTE_Y = 0;
+const NOTE_SIZE = 125;
+const NOTE_WIDTH = NOTE_SIZE;
+const NOTE_HEIGHT = NOTE_SIZE;
+
 let currentMode = localStorage.currentMode;
 
 const pages = {
   home: {
     create(mode) {
-      if (localStorage.length === 0) {
+      if (!currentMode) {
         mode = "grid";
       }
+      createIntroNote();
 
       const headerText = document.createElement("h1");
       headerText.innerText = "Notes";
@@ -276,10 +284,10 @@ const pages = {
             created: new Date().toLocaleString("en-US"),
             updated: new Date().toLocaleString("en-US"),
             moved: new Date().toLocaleString("en-US"),
-            x: 0,
-            y: 0,
-            width: 125,
-            height: 125,
+            x: NOTE_X,
+            y: NOTE_Y,
+            width: NOTE_WIDTH,
+            height: NOTE_HEIGHT,
           });
           changePage("home", currentMode);
         });
