@@ -105,6 +105,7 @@ const pages = {
         const canvasNotes = notes.map((note) => CanvasNote(canvas, c, note));
 
         let currentNote = undefined;
+        let mouseIsDown = false;
 
         let start = { x: undefined, y: undefined };
         let mouse = { x: undefined, y: undefined };
@@ -123,12 +124,13 @@ const pages = {
             start.y
           );
           currentNote = canvasNote;
+          mouseIsDown = true;
           canvasNotes.push(
             canvasNotes.splice(canvasNotes.indexOf(currentNote), 1)[0]
           );
         });
 
-        canvas.addEventListener("mouseup", (event) => {
+        window.addEventListener("mouseup", (event) => {
           if (!currentNote) {
             return;
           }
@@ -150,7 +152,18 @@ const pages = {
             clear();
             pages.note.create(currentNote.note);
           }
+          currentNote = undefined;
+          mouseIsDown = false;
+        });
 
+        canvas.addEventListener("mouseout", (event) => {
+          if (!currentNote) {
+            return;
+          }
+          event.preventDefault();
+          if (mouseIsDown) {
+            return;
+          }
           currentNote = undefined;
         });
 
@@ -183,7 +196,11 @@ const pages = {
         });
 
         const animate = () => {
-          requestAnimationFrame(animate);
+          const requestAnimationFrame = window.requestAnimationFrame(animate);
+
+          if (canvasNotes.length === 0) {
+            window.cancelAnimationFrame(requestAnimationFrame);
+          }
 
           c.clearRect(0, 0, innerWidth, innerHeight);
 
@@ -191,12 +208,6 @@ const pages = {
             canvasNotes[i].update();
           }
         };
-        const cancelAnimationFrame = () => {
-          window.cancelAnimationFrame;
-        };
-        if (canvasNotes === []) {
-          cancelAnimationFrame;
-        }
         animate();
       }
     },

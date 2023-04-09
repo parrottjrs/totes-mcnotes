@@ -22,7 +22,6 @@ const noteTitleFromContent = (note) => {
     }
     return `${title}`;
   }
-  console.log(note.title);
   return note.title;
 };
 
