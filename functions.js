@@ -10,15 +10,19 @@ const getNotes = () => {
 
 let notes = getNotes();
 
-const getNoteTitle = (note) => {
+const noteTitleFromContent = (note) => {
   if (note.title === "") {
     let title = "";
     let preview = note.content[0].insert;
     for (let i = 0; i < preview.length; i++) {
-      title += `${preview[i]}`;
+      if (preview[i] === "\n") {
+        title += " ";
+      }
+      title += preview[i];
     }
-    return `${title}...`;
+    return `${title}`;
   }
+  console.log(note.title);
   return note.title;
 };
 
@@ -27,7 +31,7 @@ const saveNote = (updatedNote) => {
 
   if (existing) {
     if (new Date(existing.updated) <= new Date(updatedNote.updated)) {
-      existing.title = updatedNote.title;
+      existing.title = noteTitleFromContent(updatedNote);
       existing.content = updatedNote.content;
       existing.color = updatedNote.color;
       existing.updated = updatedNote.updated;
@@ -35,7 +39,7 @@ const saveNote = (updatedNote) => {
       existing.y = updatedNote.y;
     }
   } else {
-    updatedNote.title = getNoteTitle(updatedNote);
+    updatedNote.title = noteTitleFromContent(updatedNote);
     updatedNote.id = Math.floor(Math.random() * 100000);
     notes.unshift(updatedNote);
   }
@@ -44,8 +48,10 @@ const saveNote = (updatedNote) => {
 
 const deleteNote = (noteToDelete) => {
   notes = notes.filter((note) => note.id != noteToDelete.id);
-
   localStorage.setItem("notes", JSON.stringify(notes));
+  deletedNotes.unshift(noteToDelete);
+  localStorage.setItem("deletedNotes", JSON.stringify(deletedNotes));
+
   if (currentMode === "grid") {
     changePage("home", currentMode);
   } else {
@@ -54,7 +60,7 @@ const deleteNote = (noteToDelete) => {
 };
 
 const getDeletedNotes = () => {
-  const maybeNotes = localStorage.getItem("deleted-notes");
+  const maybeNotes = localStorage.getItem("deletedNotes");
 
   if (maybeNotes === null) {
     return [];
@@ -65,19 +71,13 @@ const getDeletedNotes = () => {
 
 let deletedNotes = getDeletedNotes();
 
-const trashNote = (deletedNote) => {
-  deletedNotes.unshift(deletedNote);
-
-  localStorage.setItem("deletedNotes", JSON.stringify(deletedNotes));
-};
-
 const clear = () => {
   header.innerHTML = "";
   container.innerHTML = "";
-  timeWrapper.innerHTML = "";
+  timeStampDiv.innerHTML = "";
 };
 
-const hex2rgb = (hex) => {
+const checkFontContrast = (hex) => {
   const rgb = [
     `0x${hex[1]}${hex[2]}` | 0,
     `0x${hex[3]}${hex[4]}` | 0,
@@ -160,9 +160,9 @@ const createSortMethod = (selection) => {
   sortMenu.append(option);
 };
 
-const sortNotes = () => {
+const sortAndMapNotes = () => {
   const sortMenu = document.querySelector("#sort-menu");
-  const noteButtonWrapper = document.querySelector(".wrapper");
+  const noteButtonDiv = document.querySelector(".note-button-div");
 
   if (
     sortMenu.value === "Date Updated: new to old" ||
@@ -176,10 +176,10 @@ const sortNotes = () => {
   } else if (sortMenu.value === "Date Updated: old to new") {
     notes.sort((a, b) => (new Date(a.updated) < new Date(b.updated) ? -1 : 1));
   }
-  noteButtonWrapper.innerHTML = "";
+  noteButtonDiv.innerHTML = "";
 
   notes.map((note) => {
-    const noteButtonWrapper = document.querySelector(".wrapper");
+    const noteButtonDiv = document.querySelector(".note-button-div");
     const noteElm = document.createElement("button");
     noteElm.classList.add("note-button");
     noteElm.style.backgroundColor = note.color;
@@ -191,11 +191,11 @@ const sortNotes = () => {
 
     const noteTitle = document.createElement("p");
     noteTitle.innerText = note.title;
-    noteTitle.style.color = hex2rgb(note.color);
+    noteTitle.style.color = checkFontContrast(note.color);
 
     noteElm.appendChild(noteTitle);
 
-    noteButtonWrapper.appendChild(noteElm);
+    noteButtonDiv.appendChild(noteElm);
   });
 };
 

@@ -21,7 +21,7 @@ input {
   justify-content: center;
 }
 
-#time-wrapper {
+#time-stamp-div {
   height: 2em;
   background-color: #005f73;
   display: flex;
@@ -29,7 +29,7 @@ input {
   align-items: center;
 }
 
-#time-wrapper p {
+#timeStampDiv p {
   font-family: Shantell Sans;
   font-weight: 700;
   color: #001219;
@@ -82,7 +82,7 @@ section {
   align-items: center;
 }
 
-.wrapper {
+.note-button-div {
   justify-content: center;
   align-content: center;
   display: grid;
@@ -103,11 +103,16 @@ section {
   height: 8rem;
   margin-top: 15px;
   border-width: 1px;
-  font-size: 14px;
   overflow-wrap: break-word;
   hyphens: manual;
 }
 
+.note-button p {
+  max-height: 7rem;
+  overflow: hidden;
+  padding: 0;
+  margin: 1px;
+}
 .note-button p,
 #sort-menu,
 .label-for-sort-menu {
@@ -115,7 +120,7 @@ section {
   font-weight: 700;
 }
 
-#note-content {
+#quill-div {
   max-width: 100vw;
   max-width: 100vw;
   width: 23.25rem;

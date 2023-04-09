@@ -7,12 +7,12 @@ const CanvasNote = (canvas, c, note) => {
     c.fillRect(note.x, note.y, note.width, note.height);
     c.strokeRect(note.x, note.y, note.width, note.height);
     c.font = "20px arial";
-    c.fillStyle = hex2rgb(note.color);
+    c.fillStyle = checkFontContrast(note.color);
     c.fillText("+", note.x + 8, note.y + 17);
     c.font = "12px Shantell Sans";
     c.textAlign = "center";
 
-    let wrappedTitle = wrapText(
+    let wrappedTitle = wrapCanvasText(
       c,
       note.title,
       note.x + note.width / 2,
@@ -60,7 +60,7 @@ const canvasNoteFromCoords = (canvasNotes, x, y) => {
     );
 };
 
-const wrapText = (c, text, x, y, maxWidth, lineHeight) => {
+const wrapCanvasText = (c, text, x, y, maxWidth, lineHeight) => {
   let words = text.split(" ");
   let line = "";
   let testLine = "";
