@@ -4,8 +4,6 @@ const timeStampDiv = document.createElement("div");
 timeStampDiv.setAttribute("id", "time-stamp-div");
 container.insertAdjacentElement("beforebegin", timeStampDiv);
 
-// default note parameters
-
 const NOTE_COLOR = "#fffa5c";
 const NOTE_X = 0;
 const NOTE_Y = 0;
@@ -111,18 +109,28 @@ const pages = {
         let mouse = { x: undefined, y: undefined };
         let direction = { x: undefined, y: undefined };
 
+        /*
+        mousedown and mousemove have offsets on 
+        start.x and start.y to account for header,
+        timeStampDiv, and border added to timeStampDiv
+        */
+
         canvas.addEventListener("mousedown", (event) => {
           event.preventDefault();
 
-          start.x = event.clientX;
+          start.x = event.clientX + 7;
           start.y =
-            event.clientY - header.clientHeight - timeStampDiv.clientHeight;
+            event.clientY -
+            header.clientHeight -
+            timeStampDiv.clientHeight -
+            12;
 
           const canvasNote = canvasNoteFromCoords(
             canvasNotes,
             start.x,
             start.y
           );
+
           currentNote = canvasNote;
           mouseIsDown = true;
           canvasNotes.push(
@@ -173,9 +181,12 @@ const pages = {
           }
           event.preventDefault();
 
-          mouse.x = event.clientX;
+          mouse.x = event.clientX + 7;
           mouse.y =
-            event.clientY - header.clientHeight - timeStampDiv.clientHeight;
+            event.clientY -
+            header.clientHeight -
+            timeStampDiv.clientHeight -
+            12;
 
           direction.x = mouse.x - start.x;
           direction.y = mouse.y - start.y;
@@ -258,7 +269,6 @@ const pages = {
       if (note) {
         const timeStamp = document.createElement("p");
         timeStamp.innerText = `Created On: ${note.created} ---- Last Edit: ${note.updated}`;
-        timeStamp.classList.add("time-stamp");
         timeStampDiv.append(timeStamp);
 
         const deleteButton = document.createElement("button");

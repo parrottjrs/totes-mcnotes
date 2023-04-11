@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Shantell+Sans:ital,wght@1,300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Arvo&family=Comfortaa&display=swap");
 
 body {
   background-color: #e9d8a6;
@@ -13,7 +13,7 @@ input {
 }
 
 #header {
-  background-color: #005f73;
+  background: linear-gradient(0.5turn, #415a77, #778da9);
   height: 3em;
   padding-top: 1em;
   display: flex;
@@ -23,30 +23,31 @@ input {
 
 #time-stamp-div {
   height: 2em;
-  background-color: #005f73;
+  background: linear-gradient(0.5turn, #778da9, #e0e1dd);
+  border-bottom: 0.8rem ridge #ede0d4;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#timeStampDiv p {
-  font-family: Shantell Sans;
+#time-stamp-div p {
+  font-family: Arvo;
   font-weight: 700;
-  color: #001219;
+  color: #0d1b2a;
 }
 
 h1 {
-  font-family: Shantell Sans;
+  font-family: Arvo;
   font-weight: 700;
-  color: #001219;
+  color: #0d1b2a;
   font-size: 3rem;
   display: inline-block;
 }
 
 .title-input {
   margin-left: 10px;
-  text-decoration-color: #001219;
-  font-family: Shantell Sans;
+  text-decoration-color: #0d1b2a;
+  font-family: Comfortaa;
   height: 2rem;
   width: 20rem;
   border-radius: 2em;
@@ -56,20 +57,20 @@ h1 {
 }
 
 .move-button {
-  font-family: Shantell Sans;
+  font-family: Comfortaa;
   font-weight: 700;
-  color: #001219;
+  color: #0d1b2a;
   margin-left: 15px;
   height: 30px;
   display: inline-block;
-  border: 2px solid #0a9396;
-  border-radius: 30px;
+  border: 2px solid #415a77;
+  border-radius: 5px;
   font-size: 15px;
-  background-color: #ee9b00;
+  background-color: #e0e1dd;
 }
 
 .move-button:hover {
-  background-color: #94d2bd;
+  background-color: #edf6f9;
 }
 
 .label-for-sort-menu {
@@ -116,7 +117,7 @@ section {
 .note-button p,
 #sort-menu,
 .label-for-sort-menu {
-  font-family: Shantell Sans;
+  font-family: Comfortaa;
   font-weight: 700;
 }
 
@@ -129,7 +130,7 @@ section {
 
 .edit-button,
 .delete-button {
-  font-family: Shantell Sans;
+  font-family: Comfortaa;
   font-weight: 700;
   color: #001219;
   height: 30px;
@@ -140,11 +141,11 @@ section {
 }
 
 .edit-button {
-  background-color: #ee9b00;
+  background-color: #e0e1dd;
 }
 
 .delete-button {
-  background-color: #e5383b;
+  background-color: #e71d36;
 }
 
 #file-selector {
@@ -152,23 +153,23 @@ section {
 }
 
 .label-for-import {
-  font-family: Shantell Sans;
+  font-family: Comfortaa;
   font-weight: 700;
   color: #001219;
   margin: 5px auto;
-  border: 2px solid #005f73;
+  border: 2px solid #415a77;
   border-radius: 30px;
   font-size: 15px;
   padding: 4px;
-  background-color: #ee9b00;
+  background-color: #e0e1dd;
   cursor: pointer;
 }
 
 .edit-button:hover,
 .label-for-import:hover {
-  background-color: #0a9396;
+  background-color: #edf6f9;
 }
 
 .delete-button:hover {
-  background-color: #ba181b;
+  background-color: #f71735;
 }

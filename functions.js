@@ -207,7 +207,7 @@ const createIntroNote = () => {
   if (notes.length === 0 && deletedNotes.length === 0)
     saveNote({
       title: "Click Me!",
-      content: [{ insert: "Hello World!\n" }],
+      content: introNote,
       color: NOTE_COLOR,
       created: new Date().toLocaleString("en-US"),
       updated: new Date().toLocaleString("en-US"),
