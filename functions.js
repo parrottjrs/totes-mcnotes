@@ -1,5 +1,4 @@
-import { introNote } from "./intro-note.js";
-import { timeStampDiv, pages } from "./index.js";
+import { introNote, timeStampDiv, pages } from "./parent-module.js";
 
 let currentMode = localStorage.currentMode;
 

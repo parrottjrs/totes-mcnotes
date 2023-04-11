@@ -1,4 +1,4 @@
-import { checkFontContrast } from "./functions.js";
+import { checkFontContrast } from "./parent-module.js";
 
 const MAX_LINES_KEY = 5;
 

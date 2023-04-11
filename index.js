@@ -15,17 +15,14 @@ import {
   sortAndMapNotes,
   setCurrentMode,
   createIntroNote,
-} from "./functions.js";
-
-import { CanvasNote, canvasNoteFromCoords } from "./canvas.js";
-
-import {
   NOTE_COLOR,
   NOTE_X,
   NOTE_Y,
   NOTE_WIDTH,
   NOTE_HEIGHT,
-} from "./intro-note.js";
+  CanvasNote,
+  canvasNoteFromCoords,
+} from "./parent-module.js";
 
 const body = document.querySelector("body");
 const header = document.createElement("header");
@@ -69,15 +66,18 @@ const pages = {
         importTotesMcNotes();
       });
 
-      const modeButton = components.moveButton("change mode", () => {
-        if (currentMode === "grid") {
-          setCurrentMode("canvas");
-          changePage("home", currentMode);
-        } else {
-          setCurrentMode("grid");
-          changePage("home", currentMode);
+      const modeButton = components.moveButton(
+        `change to ${currentMode}`,
+        () => {
+          if (currentMode === "grid") {
+            setCurrentMode("canvas");
+            changePage("home", currentMode);
+          } else {
+            setCurrentMode("grid");
+            changePage("home", currentMode);
+          }
         }
-      });
+      );
 
       header.append(
         headerText,
@@ -385,6 +385,7 @@ const pages = {
     },
   },
 };
+
 pages.home.create(currentMode);
 
-export { currentMode, notes, timeStampDiv, pages };
+export { timeStampDiv, pages };
