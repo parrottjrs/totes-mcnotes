@@ -1,4 +1,11 @@
-const introNote = [
+const NOTE_COLOR = "#fffa5c";
+const NOTE_X = 0;
+const NOTE_Y = 0;
+const NOTE_SIZE = 125;
+const NOTE_WIDTH = NOTE_SIZE;
+const NOTE_HEIGHT = NOTE_SIZE;
+
+const introNoteContent = [
   { insert: "Hi, my name is Jordan and Welcome to Totes McNotes!" },
   { attributes: { header: 1 }, insert: "\n" },
   { insert: "\nThis app was made as my first project for " },
@@ -109,3 +116,18 @@ const introNote = [
       "If you made it to the end, congratulations! Your prize is a  healthy dose of self satisfaction. Can you feel it?\n\nNow go make some notes. Put them out into the world and let them fly, or whatever it is that notes do.\n\nEnjoy!\n\n-Jordan Parrott\n",
   },
 ];
+
+const introNote = {
+  title: "Click Me!",
+  content: introNoteContent,
+  color: NOTE_COLOR,
+  created: new Date().toLocaleString("en-US"),
+  updated: new Date().toLocaleString("en-US"),
+  moved: new Date().toLocaleString("en-US"),
+  x: NOTE_HEIGHT,
+  y: NOTE_SIZE,
+  width: NOTE_WIDTH,
+  height: NOTE_HEIGHT,
+};
+
+export { NOTE_COLOR, NOTE_X, NOTE_Y, NOTE_WIDTH, NOTE_HEIGHT, introNote };

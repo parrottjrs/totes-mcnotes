@@ -1,3 +1,5 @@
+import { checkFontContrast } from "./functions.js";
+
 const MAX_LINES_KEY = 5;
 
 const CanvasNote = (canvas, c, note) => {
@@ -9,7 +11,7 @@ const CanvasNote = (canvas, c, note) => {
     c.font = "20px arial";
     c.fillStyle = checkFontContrast(note.color);
     c.fillText("+", note.x + 8, note.y + 17);
-    c.font = "12px Shantell Sans";
+    c.font = "14px Comfortaa";
     c.textAlign = "center";
 
     let wrappedTitle = wrapCanvasText(
@@ -89,3 +91,5 @@ const wrapCanvasText = (c, text, x, y, maxWidth, lineHeight) => {
   }
   return lineArray;
 };
+
+export { CanvasNote, canvasNoteFromCoords };

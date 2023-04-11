@@ -1,17 +1,43 @@
-const header = document.querySelector("#header");
-const container = document.querySelector("#container");
+import {
+  currentMode,
+  notes,
+  saveNote,
+  deleteNote,
+  deletedNotes,
+  clear,
+  checkFontContrast,
+  exportNote,
+  importTotesMcNotes,
+  components,
+  setMultipleAttributes,
+  changePage,
+  createSortMethod,
+  sortAndMapNotes,
+  setCurrentMode,
+  createIntroNote,
+} from "./functions.js";
+
+import { CanvasNote, canvasNoteFromCoords } from "./canvas.js";
+
+import {
+  NOTE_COLOR,
+  NOTE_X,
+  NOTE_Y,
+  NOTE_WIDTH,
+  NOTE_HEIGHT,
+} from "./intro-note.js";
+
+const body = document.querySelector("body");
+const header = document.createElement("header");
+header.setAttribute("id", "header");
+const container = document.createElement("section");
+container.setAttribute("id", "container");
+
 const timeStampDiv = document.createElement("div");
 timeStampDiv.setAttribute("id", "time-stamp-div");
+
+body.append(header, container);
 container.insertAdjacentElement("beforebegin", timeStampDiv);
-
-const NOTE_COLOR = "#fffa5c";
-const NOTE_X = 0;
-const NOTE_Y = 0;
-const NOTE_SIZE = 125;
-const NOTE_WIDTH = NOTE_SIZE;
-const NOTE_HEIGHT = NOTE_SIZE;
-
-let currentMode = localStorage.currentMode;
 
 const pages = {
   /* 
@@ -69,7 +95,7 @@ const pages = {
           sortAndMapNotes();
         });
         const labelForSortMenu = document.createElement("label");
-        setAttributes(labelForSortMenu, {
+        setMultipleAttributes(labelForSortMenu, {
           for: "#sort-menu",
           class: "label-for-sort-menu",
         });
@@ -89,10 +115,6 @@ const pages = {
 
         sortAndMapNotes();
       } else {
-        notes = notes.sort((a, b) =>
-          new Date(a.moved) < new Date(b.moved) ? -1 : 1
-        );
-
         const canvas = document.createElement("canvas");
         canvas.width = window.innerWidth;
         canvas.height =
@@ -230,7 +252,7 @@ const pages = {
       });
 
       const titleInput = document.createElement("input");
-      setAttributes(titleInput, {
+      setMultipleAttributes(titleInput, {
         type: "text",
         placeholder: "My New Note...",
       });
@@ -253,7 +275,7 @@ const pages = {
       toolBar.style.border = "0";
 
       const colorPicker = document.createElement("input");
-      setAttributes(colorPicker, {
+      setMultipleAttributes(colorPicker, {
         id: "color-picker",
         type: "color",
         value: NOTE_COLOR,
@@ -363,3 +385,6 @@ const pages = {
     },
   },
 };
+pages.home.create(currentMode);
+
+export { currentMode, notes, timeStampDiv, pages };

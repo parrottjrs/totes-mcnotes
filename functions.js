@@ -1,3 +1,8 @@
+import { introNote } from "./intro-note.js";
+import { timeStampDiv, pages } from "./index.js";
+
+let currentMode = localStorage.currentMode;
+
 const getNotes = () => {
   const maybeNotes = localStorage.getItem("notes");
 
@@ -99,7 +104,7 @@ const exportNote = (content, fileName, contentType) => {
 
 const importTotesMcNotes = () => {
   const fileSelector = document.createElement("input");
-  setAttributes(fileSelector, { type: "file", id: "file-selector" });
+  setMultipleAttributes(fileSelector, { type: "file", id: "file-selector" });
   container.append(fileSelector);
 
   fileSelector.addEventListener("change", () => {
@@ -140,7 +145,7 @@ const components = {
   },
 };
 
-const setAttributes = (elm, attributes) => {
+const setMultipleAttributes = (elm, attributes) => {
   for (const key in attributes) {
     elm.setAttribute(key, attributes[key]);
   }
@@ -160,6 +165,12 @@ const createSortMethod = (selection) => {
 };
 
 const sortAndMapNotes = () => {
+  if (currentMode === "canvas") {
+    notes = notes.sort((a, b) =>
+      new Date(a.moved) < new Date(b.moved) ? -1 : 1
+    );
+    return notes;
+  }
   const sortMenu = document.querySelector("#sort-menu");
   const noteButtonDiv = document.querySelector(".note-button-div");
 
@@ -204,17 +215,27 @@ const setCurrentMode = (mode = "grid") => {
 };
 
 const createIntroNote = () => {
-  if (notes.length === 0 && deletedNotes.length === 0)
-    saveNote({
-      title: "Click Me!",
-      content: introNote,
-      color: NOTE_COLOR,
-      created: new Date().toLocaleString("en-US"),
-      updated: new Date().toLocaleString("en-US"),
-      moved: new Date().toLocaleString("en-US"),
-      x: NOTE_HEIGHT,
-      y: NOTE_SIZE,
-      width: NOTE_WIDTH,
-      height: NOTE_HEIGHT,
-    });
+  if (notes.length === 0 && deletedNotes.length === 0) {
+    saveNote(introNote);
+  }
+};
+
+export {
+  currentMode,
+  getNotes,
+  notes,
+  saveNote,
+  deleteNote,
+  deletedNotes,
+  clear,
+  checkFontContrast,
+  exportNote,
+  importTotesMcNotes,
+  components,
+  setMultipleAttributes,
+  changePage,
+  createSortMethod,
+  sortAndMapNotes,
+  setCurrentMode,
+  createIntroNote,
 };
