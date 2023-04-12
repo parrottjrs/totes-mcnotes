@@ -1,19 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=Arvo&family=Comfortaa&display=swap");
 
+:root {
+  --header-dark: #5f82aa;
+  --header-lighter: #8193aa;
+  --header-lightest: #9bbbce;
+  --bottom-border-color: #aabac8c5;
+  --font-color: #0d1b2a;
+  --button-background-color: #e0e1dd;
+  --button-hover-color: #edf6f9;
+  --button-border-color: #415a77;
+  --button-and-input-font: Comfortaa;
+  --header-font: Arvo;
+}
+
 body {
-  background-color: #e9d8a6;
   background-image: url(./cork.jpg);
   margin: 0;
 }
 
-button,
-input {
-  cursor: pointer;
-  opacity: 100%;
-}
-
 #header {
-  background: linear-gradient(0.5turn, #415a77, #778da9);
+  background: linear-gradient(
+    0.5turn,
+    var(--header-dark),
+    var(--header-lighter)
+  );
   height: 3em;
   padding-top: 1em;
   display: flex;
@@ -21,33 +31,34 @@ input {
   justify-content: center;
 }
 
-#time-stamp-div {
-  height: 2em;
-  background: linear-gradient(0.5turn, #778da9, #e0e1dd);
-  border-bottom: 0.8rem ridge #ede0d4;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-#time-stamp-div p {
-  font-family: Arvo;
-  font-weight: 700;
-  color: #0d1b2a;
-}
-
 h1 {
-  font-family: Arvo;
-  font-weight: 700;
-  color: #0d1b2a;
   font-size: 3rem;
   display: inline-block;
 }
 
+#time-stamp-div {
+  height: 2em;
+  background: linear-gradient(
+    0.5turn,
+    var(--header-lighter),
+    var(--header-lightest)
+  );
+  border-bottom: 0.8rem ridge var(--bottom-border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+h1,
+#time-stamp-div p {
+  font-family: var(--header-font);
+  font-weight: 700;
+  color: var(--font-color);
+}
+
 .title-input {
   margin-left: 10px;
-  text-decoration-color: #0d1b2a;
-  font-family: Comfortaa;
   height: 2rem;
   width: 20rem;
   border-radius: 2em;
@@ -56,25 +67,9 @@ h1 {
   max-width: 100vw;
 }
 
-.move-button {
-  font-family: Comfortaa;
-  font-weight: 700;
-  color: #0d1b2a;
-  margin-left: 15px;
-  height: 30px;
-  display: inline-block;
-  border: 2px solid #415a77;
-  border-radius: 5px;
-  font-size: 15px;
-  background-color: #e0e1dd;
-}
-
-.move-button:hover {
-  background-color: #edf6f9;
-}
-
 .label-for-sort-menu {
   padding: 1em;
+  font-size: ;
 }
 
 section {
@@ -114,62 +109,81 @@ section {
   padding: 0;
   margin: 1px;
 }
+
 .note-button p,
 #sort-menu,
-.label-for-sort-menu {
-  font-family: Comfortaa;
+.label-for-sort-menu,
+.button,
+.save-button,
+.title-input,
+.delete-button {
+  font-family: var(--button-and-input-font);
   font-weight: 700;
+  color: var(--font-color);
 }
 
 #quill-div {
-  max-width: 100vw;
-  max-width: 100vw;
-  width: 23.25rem;
-  height: 20.69rem;
+  height: 30rem;
 }
 
-.edit-button,
-.delete-button {
-  font-family: Comfortaa;
-  font-weight: 700;
-  color: #001219;
-  height: 30px;
-  margin: 5px auto;
-  border: 2px solid #005f73;
-  border-radius: 30px;
-  font-size: 15px;
+#quill-div,
+.ql-toolbar {
+  max-width: 100vw;
+  width: 40rem;
 }
 
-.edit-button {
-  background-color: #e0e1dd;
+.button {
+  margin-left: 1em;
+  display: inline-block;
 }
 
 .delete-button {
   background-color: #e71d36;
 }
 
-#file-selector {
-  display: none;
+.save-button,
+.delete-button {
+  margin: 0.3em auto;
 }
 
-.label-for-import {
-  font-family: Comfortaa;
-  font-weight: 700;
-  color: #001219;
-  margin: 5px auto;
-  border: 2px solid #415a77;
-  border-radius: 30px;
-  font-size: 15px;
-  padding: 4px;
-  background-color: #e0e1dd;
-  cursor: pointer;
+.button,
+.save-button,
+#color-picker {
+  background-color: var(--button-background-color);
 }
 
-.edit-button:hover,
-.label-for-import:hover {
-  background-color: #edf6f9;
+.button,
+.save-button,
+.delete-button {
+  height: 2rem;
+  width: 10rem;
+  min-width: 90px;
+  border-radius: 0.5em;
+  font-size: 0.8em;
+  border: 2px solid var(--button-border-color);
+}
+
+.button:hover,
+.save-button:hover,
+#color-picker:hover {
+  background-color: var(--button-hover-color);
 }
 
 .delete-button:hover {
   background-color: #f71735;
+}
+
+.note-button:hover {
+  opacity: 0.8;
+}
+
+button,
+input,
+#sort-menu {
+  cursor: pointer;
+  opacity: 100%;
+}
+
+#file-selector {
+  display: none;
 }

@@ -55,19 +55,19 @@ const pages = {
       const headerText = document.createElement("h1");
       headerText.innerText = "Notes";
 
-      const newNoteButton = components.moveButton("+ new note", () =>
+      const newNoteButton = components.button("+ new note", () =>
         changePage("note")
       );
 
-      const exportButton = components.moveButton("export", () =>
+      const exportButton = components.button("export", () =>
         exportNote(JSON.stringify(notes), "Totes McNotes")
       );
 
-      const importButton = components.moveButton("import", () => {
+      const importButton = components.button("import", () => {
         importTotesMcNotes();
       });
 
-      const modeButton = components.moveButton(
+      const modeButton = components.button(
         `change to ${currentMode === "grid" ? "canvas" : "grid"}`,
         () => {
           if (currentMode === "grid") {
@@ -248,7 +248,7 @@ const pages = {
   },
   note: {
     create(note) {
-      const moveButton = components.moveButton("back", () => {
+      const backButton = components.button("back", () => {
         changePage("home", currentMode);
       });
 
@@ -260,7 +260,7 @@ const pages = {
       titleInput.classList.add("title-input");
 
       const saveButton = document.createElement("button");
-      saveButton.classList.add("edit-button");
+      saveButton.classList.add("save-button");
 
       const quillDiv = document.createElement("div");
       quillDiv.setAttribute("id", "quill-div");
@@ -345,7 +345,7 @@ const pages = {
         });
         container.append(saveButton);
       }
-      header.append(titleInput, moveButton);
+      header.append(titleInput, backButton);
       container.prepend(colorPicker);
     },
   },
@@ -354,14 +354,14 @@ const pages = {
       const headerText = document.createElement("h1");
       headerText.innerText = "Trash";
 
-      const moveButton = components.moveButton("back", () =>
+      const backButton = components.button("back", () =>
         changePage("home", currentMode)
       );
 
       const noteButtonDiv = document.createElement("div");
       noteButtonDiv.classList.add("note-button-div");
 
-      header.append(headerText, moveButton);
+      header.append(headerText, backButton);
       container.append(noteButtonDiv);
 
       deletedNotes.map((note) => {

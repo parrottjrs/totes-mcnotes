@@ -146,12 +146,12 @@ const importTotesMcNotes = () => {
 };
 
 const components = {
-  moveButton(text, onClick) {
-    const moveButton = document.createElement("button");
-    moveButton.innerText = text;
-    moveButton.classList.add("move-button");
-    moveButton.addEventListener("click", onClick);
-    return moveButton;
+  button(text, onClick) {
+    const button = document.createElement("button");
+    button.innerText = text;
+    button.classList.add("button");
+    button.addEventListener("click", onClick);
+    return button;
   },
 };
 
