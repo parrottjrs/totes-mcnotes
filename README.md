@@ -1,5 +1,7 @@
 # Hi, my name is Jordan and Welcome to Totes McNotes!
 
+<img width="920" alt="Screenshot 2023-04-12 at 8 57 11 PM" src="https://user-images.githubusercontent.com/124001846/231609632-bf8f0029-0643-4094-a6a5-2597cd8391b9.png">
+
 This app was made as my first project for [Get Coding NL](https://www.getcoding.ca).
 
 As an ADHDer, I sometimes struggle to find the right organizational tools to keep life in order. So what better project was there to do than my very own notes app?
@@ -18,6 +20,8 @@ Using Totes McNotes is easy! Just follow these instructions and you'll be a pro 
 4. Marvel at the pretty colours
 5. Click "create"
 6. Congratulations, you've made your first note! High five!
+
+<img width="935" alt="Screenshot 2023-04-12 at 9 17 00 PM" src="https://user-images.githubusercontent.com/124001846/231610344-ce7db67e-90cf-46f0-8568-e302dfb908c3.png">
 
 Once a new note is created, it will appear on the home page.
 
@@ -45,6 +49,8 @@ I was hoping you'd ask that question! Here's what you want to do:
 6. Click the import button and select the "totes mcnotes" file from your external storage device.
 7. Success!
 
+<img width="976" alt="Screenshot 2023-04-12 at 9 20 33 PM" src="https://user-images.githubusercontent.com/124001846/231610501-835c5b63-e263-45b9-bf99-5dc0c5582eb6.png">
+
 Don't worry about duplicate notes. Totes will fix that up for you during the import process.
 
 ## Now for my favourite part:
@@ -60,6 +66,8 @@ Grid is the default mode for Totes. It organizes your notes in...well...a grid. 
 This is the part where I had the most fun during creation. It was a big challenge that really paid off, because it is the mode that embodies the energy that Totes McNotes really wants to get across.
 
 Put simply, canvas mode gives you the freedom to drag and drop your notes wherever you want on the cork board. The little plus sign in the top left of each note is your edit button. Apart from this, everything works just like in grid mode.
+
+<img width="893" alt="Screenshot 2023-04-12 at 9 18 16 PM" src="https://user-images.githubusercontent.com/124001846/231610536-efdfb246-e2b4-4b2f-8d76-0737bd984ab7.png">
 
 _Note: At the moment, Canvas mode is not fully functional on touch screens._
 
