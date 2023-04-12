@@ -42,7 +42,7 @@ const introNoteContent = [
   { attributes: { list: "ordered" }, insert: "\n" },
   {
     insert:
-      '\nOnce a new note is created, it will appear on the home page. \n\nIf your notes start piling up in the grid, feel free to sort them using the drop down menu in the header.\n\nYou can edit the note by clicking on it (just like you did this one). The edit page adds the option to delete the note if you no longer have any use for it. \n\n"Where are my notes stored?"',
+      '\nOnce a new note is created, it will appear on the home page. \n\nIf your notes start piling up in the grid, feel free to sort them using the drop down menu in the header.\n\nYou can edit a note by clicking on it (just like you did this one). The edit page adds the option to delete the note if you no longer have any use for it. \n\n"Where are my notes stored?"',
   },
   { attributes: { header: 2 }, insert: "\n" },
   {
@@ -66,7 +66,10 @@ const introNoteContent = [
   { attributes: { list: "ordered" }, insert: "\n" },
   { insert: "Open Totes in the browser you wish to move to." },
   { attributes: { list: "ordered" }, insert: "\n" },
-  { insert: 'Click the import button and select the "totes mcnotes" file.' },
+  {
+    insert:
+      'Click the import button and select the "totes mcnotes" file from your external storage device.',
+  },
   { attributes: { list: "ordered" }, insert: "\n" },
   { insert: "Success!" },
   { attributes: { list: "ordered" }, insert: "\n" },
@@ -88,7 +91,7 @@ const introNoteContent = [
   { attributes: { header: 3 }, insert: "\n" },
   {
     insert:
-      "*Note: At the moment, Canvas mode is not fully functional on touch screens.\n\nThis is the part where I had the most fun during creation. This is the mode that embodies the energy that Totes McNotes really wants to get across. \n\nPut most simply, canvas mode gives you the freedom to drag and drop your notes wherever you want on the cork board. The little plus sign in the top left of each note is your edit button. Apart from this, everything works just like in grid mode. \n\nThings and people that made Totes possible:",
+      "*Note: At the moment, Canvas mode is not fully functional on touch screens.\n\nThis is the part where I had the most fun during creation. This is the mode that embodies the energy that Totes McNotes really wants to get across. \n\nPut simply, canvas mode gives you the freedom to drag and drop your notes wherever you want on the cork board. The little plus sign in the top left of each note is your edit button. Apart from this, everything works just like in grid mode. \n\nThings and people that made Totes McNotes possible:",
   },
   { attributes: { header: 2 }, insert: "\n" },
   { insert: "HTML" },
@@ -113,7 +116,7 @@ const introNoteContent = [
   { attributes: { header: 2 }, insert: "\n" },
   {
     insert:
-      "If you made it to the end, congratulations! Your prize is a  healthy dose of self satisfaction. Can you feel it?\n\nNow go make some notes. Put them out into the world and let them fly, or whatever it is that notes do.\n\nEnjoy!\n\n-Jordan Parrott\n",
+      "If you made it to the end, congratulations! Your prize is a healthy dose of self satisfaction. Can you feel it? Now go make some notes. Put them out into the world and let them fly, or whatever it is that notes do.\n\nEnjoy!\n\n-Jordan Parrott\n",
   },
 ];
 

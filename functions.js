@@ -8,7 +8,7 @@ import {
   NOTE_Y,
 } from "./parent-module.js";
 
-let currentMode = localStorage.currentMode || "canvas";
+let currentMode = localStorage.currentMode || "grid";
 
 const getNotes = () => {
   const maybeNotes = localStorage.getItem("notes");
