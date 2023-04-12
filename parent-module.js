@@ -18,6 +18,7 @@ export {
   sortAndMapNotes,
   setCurrentMode,
   createIntroNote,
+  checkForCoords,
 } from "./functions.js";
 
 export { CanvasNote, canvasNoteFromCoords } from "./canvas.js";

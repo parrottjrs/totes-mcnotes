@@ -1,6 +1,14 @@
-import { introNote, timeStampDiv, pages } from "./parent-module.js";
+import {
+  introNote,
+  timeStampDiv,
+  pages,
+  NOTE_WIDTH,
+  NOTE_HEIGHT,
+  NOTE_X,
+  NOTE_Y,
+} from "./parent-module.js";
 
-let currentMode = localStorage.currentMode;
+let currentMode = localStorage.currentMode || "canvas";
 
 const getNotes = () => {
   const maybeNotes = localStorage.getItem("notes");
@@ -38,8 +46,11 @@ const saveNote = (updatedNote) => {
       existing.content = updatedNote.content;
       existing.color = updatedNote.color;
       existing.updated = updatedNote.updated;
+      existing.moved = updatedNote.moved;
       existing.x = updatedNote.x;
       existing.y = updatedNote.y;
+      existing.width = updatedNote.width;
+      existing.height = updatedNote.height;
     }
   } else {
     updatedNote.title = noteTitleFromContent(updatedNote);
@@ -219,6 +230,26 @@ const createIntroNote = () => {
   }
 };
 
+const checkForCoords = (note) => {
+  const x = note.hasOwnProperty("x");
+
+  if (!x) {
+    saveNote({
+      id: note.id,
+      title: note.title,
+      content: note.content,
+      color: note.color,
+      created: note.created,
+      updated: new Date().toLocaleString("en-US"),
+      moved: new Date().toLocaleString("en-US"),
+      x: NOTE_X,
+      y: NOTE_Y,
+      width: NOTE_WIDTH,
+      height: NOTE_HEIGHT,
+    });
+  }
+};
+
 export {
   currentMode,
   getNotes,
@@ -237,4 +268,5 @@ export {
   sortAndMapNotes,
   setCurrentMode,
   createIntroNote,
+  checkForCoords,
 };

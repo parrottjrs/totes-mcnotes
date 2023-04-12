@@ -22,6 +22,7 @@ import {
   NOTE_HEIGHT,
   CanvasNote,
   canvasNoteFromCoords,
+  checkForCoords,
 } from "./parent-module.js";
 
 const body = document.querySelector("body");
@@ -67,7 +68,7 @@ const pages = {
       });
 
       const modeButton = components.moveButton(
-        `change to ${currentMode}`,
+        `change to ${currentMode === "grid" ? "canvas" : "grid"}`,
         () => {
           if (currentMode === "grid") {
             setCurrentMode("canvas");
@@ -387,5 +388,9 @@ const pages = {
 };
 
 pages.home.create(currentMode);
+
+notes.forEach((note) => {
+  checkForCoords(note);
+});
 
 export { timeStampDiv, pages };
