@@ -19,6 +19,7 @@ export {
   setCurrentMode,
   createIntroNote,
   checkForCoords,
+  randomColor,
 } from "./functions.js";
 
 export { CanvasNote, canvasNoteFromCoords } from "./canvas.js";

@@ -23,6 +23,7 @@ import {
   CanvasNote,
   canvasNoteFromCoords,
   checkForCoords,
+  randomColor,
 } from "./parent-module.js";
 
 const body = document.querySelector("body");
@@ -60,7 +61,7 @@ const pages = {
       );
 
       const exportButton = components.button("export", () =>
-        exportNote(JSON.stringify(notes), "Totes McNotes")
+        exportNote(JSON.stringify(notes), "Totes McNotes.json")
       );
 
       const importButton = components.button("import", () => {
@@ -262,12 +263,14 @@ const pages = {
       const saveButton = document.createElement("button");
       saveButton.classList.add("save-button");
 
+      const colorPickerDiv = document.createElement("div");
+
       const quillDiv = document.createElement("div");
       quillDiv.setAttribute("id", "quill-div");
       quillDiv.style.backgroundColor = NOTE_COLOR;
       quillDiv.style.color = "#000000";
 
-      container.append(quillDiv);
+      container.append(colorPickerDiv, quillDiv);
 
       const quill = new Quill(quillDiv, { theme: "snow" });
 
@@ -287,6 +290,15 @@ const pages = {
         quillDiv.style.backgroundColor = colorPicker.value;
         quillDiv.style.color = checkFontContrast(colorPicker.value);
         toolBar.style.backgroundColor = colorPicker.value;
+      });
+
+      const randomColorButton = components.button("Random Color", () => {
+        const myColor = randomColor();
+
+        colorPicker.value = myColor;
+        quillDiv.style.backgroundColor = myColor;
+        quillDiv.style.color = checkFontContrast(myColor);
+        toolBar.style.backgroundColor = myColor;
       });
 
       if (note) {
@@ -346,7 +358,7 @@ const pages = {
         container.append(saveButton);
       }
       header.append(titleInput, backButton);
-      container.prepend(colorPicker);
+      colorPickerDiv.append(colorPicker, randomColorButton);
     },
   },
   trash: {

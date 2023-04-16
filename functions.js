@@ -250,6 +250,26 @@ const checkForCoords = (note) => {
   }
 };
 
+function randomInteger(max) {
+  return Math.floor(Math.random() * (max + 1));
+}
+
+function randomColor() {
+  let hex1 = randomInteger(255).toString(16);
+  let hex2 = randomInteger(255).toString(16);
+  let hex3 = randomInteger(255).toString(16);
+
+  let myColor = `#${hex1}${hex2}${hex3}`;
+
+  /* color picker doesn't like when hex != rrggbb */
+
+  if (myColor.length < 7) {
+    myColor = randomColor();
+  }
+
+  return myColor;
+}
+
 export {
   currentMode,
   getNotes,
@@ -269,4 +289,5 @@ export {
   setCurrentMode,
   createIntroNote,
   checkForCoords,
+  randomColor,
 };
