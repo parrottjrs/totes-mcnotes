@@ -21,7 +21,9 @@ Using Totes McNotes is easy! Just follow these instructions and you'll be a pro 
 5. Click "create"
 6. Congratulations, you've made your first note! High five!
 
-<img width="935" alt="Screenshot 2023-04-12 at 9 17 00 PM" src="https://user-images.githubusercontent.com/124001846/231610344-ce7db67e-90cf-46f0-8568-e302dfb908c3.png">
+
+https://user-images.githubusercontent.com/124001846/232258739-2fe2235c-c90a-4342-b708-d0fba20534c5.mp4
+
 
 Once a new note is created, it will appear on the home page.
 
@@ -49,7 +51,8 @@ I was hoping you'd ask that question! Here's what you want to do:
 6. Click the import button and select the "totes mcnotes" file from your external storage device.
 7. Success!
 
-<img width="976" alt="Screenshot 2023-04-12 at 9 20 33 PM" src="https://user-images.githubusercontent.com/124001846/231610501-835c5b63-e263-45b9-bf99-5dc0c5582eb6.png">
+<img width="983" alt="Screenshot 2023-04-14 at 7 35 09 PM" src="https://user-images.githubusercontent.com/124001846/232258501-89838850-e7e3-4ba7-818b-801925bdd395.png">
+
 
 Don't worry about duplicate notes. Totes will fix that up for you during the import process.
 
@@ -67,7 +70,11 @@ This is the part where I had the most fun during creation. It was a big challeng
 
 Put simply, canvas mode gives you the freedom to drag and drop your notes wherever you want on the cork board. The little plus sign in the top left of each note is your edit button. Apart from this, everything works just like in grid mode.
 
-<img width="893" alt="Screenshot 2023-04-12 at 9 18 16 PM" src="https://user-images.githubusercontent.com/124001846/231610536-efdfb246-e2b4-4b2f-8d76-0737bd984ab7.png">
+
+
+https://user-images.githubusercontent.com/124001846/232258521-051a31c5-71ee-4386-a0a9-c0b2fca81db3.mp4
+
+
 
 _Note: At the moment, Canvas mode is not fully functional on touch screens._
 
