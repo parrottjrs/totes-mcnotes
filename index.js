@@ -260,9 +260,6 @@ const pages = {
       });
       titleInput.classList.add("title-input");
 
-      const saveButton = document.createElement("button");
-      saveButton.classList.add("save-button");
-
       const colorPickerDiv = document.createElement("div");
 
       const quillDiv = document.createElement("div");
@@ -306,12 +303,34 @@ const pages = {
         timeStamp.innerText = `Created On: ${note.created} ---- Last Edit: ${note.updated}`;
         timeStampDiv.append(timeStamp);
 
-        const deleteButton = document.createElement("button");
-        deleteButton.classList.add("delete-button");
-        deleteButton.innerText = "delete";
-        deleteButton.addEventListener("click", () => {
-          deleteNote(note);
-        });
+        const saveButton = components.button(
+          "save",
+          () => {
+            saveNote({
+              id: note.id,
+              title: titleInput.value,
+              content: quill.getContents().ops,
+              color: colorPicker.value,
+              created: note.created,
+              updated: new Date().toLocaleString("en-US"),
+              moved: note.moved,
+              x: note.x,
+              y: note.y,
+              width: note.width,
+              height: note.height,
+            });
+            changePage("home", currentMode);
+          },
+          "save-button"
+        );
+
+        const deleteButton = components.button(
+          "delete",
+          () => {
+            deleteNote(note);
+          },
+          "delete-button"
+        );
         container.append(saveButton, deleteButton);
 
         titleInput.value = note.title;
@@ -320,41 +339,26 @@ const pages = {
         toolBar.style.backgroundColor = note.color;
         quillDiv.style.backgroundColor = note.color;
         quillDiv.style.color = checkFontContrast(note.color);
-
-        saveButton.innerText = "save";
-        saveButton.addEventListener("click", () => {
-          saveNote({
-            id: note.id,
-            title: titleInput.value,
-            content: quill.getContents().ops,
-            color: colorPicker.value,
-            created: note.created,
-            updated: new Date().toLocaleString("en-US"),
-            moved: note.moved,
-            x: note.x,
-            y: note.y,
-            width: note.width,
-            height: note.height,
-          });
-          changePage("home", currentMode);
-        });
       } else {
-        saveButton.innerText = "create";
-        saveButton.addEventListener("click", () => {
-          saveNote({
-            title: titleInput.value,
-            content: quill.getContents().ops,
-            color: colorPicker.value,
-            created: new Date().toLocaleString("en-US"),
-            updated: new Date().toLocaleString("en-US"),
-            moved: new Date().toLocaleString("en-US"),
-            x: NOTE_X,
-            y: NOTE_Y,
-            width: NOTE_WIDTH,
-            height: NOTE_HEIGHT,
-          });
-          changePage("home", currentMode);
-        });
+        const saveButton = components.button(
+          "create",
+          () => {
+            saveNote({
+              title: titleInput.value,
+              content: quill.getContents().ops,
+              color: colorPicker.value,
+              created: new Date().toLocaleString("en-US"),
+              updated: new Date().toLocaleString("en-US"),
+              moved: new Date().toLocaleString("en-US"),
+              x: NOTE_X,
+              y: NOTE_Y,
+              width: NOTE_WIDTH,
+              height: NOTE_HEIGHT,
+            });
+            changePage("home", currentMode);
+          },
+          "save-button"
+        );
         container.append(saveButton);
       }
       header.append(titleInput, backButton);

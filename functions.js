@@ -146,10 +146,10 @@ const importTotesMcNotes = () => {
 };
 
 const components = {
-  button(text, onClick) {
+  button(text, onClick, cl = "button") {
     const button = document.createElement("button");
     button.innerText = text;
-    button.classList.add("button");
+    button.classList.add(cl);
     button.addEventListener("click", onClick);
     return button;
   },
@@ -200,14 +200,23 @@ const sortAndMapNotes = () => {
 
   notes.map((note) => {
     const noteButtonDiv = document.querySelector(".note-button-div");
-    const noteElm = document.createElement("button");
-    noteElm.classList.add("note-button");
+
+    const noteElm = components.button(
+      "",
+      () => {
+        clear();
+        pages.note.create(note);
+      },
+      "note-button"
+    );
+    // const noteElm = document.createElement("button");
+    // noteElm.classList.add("note-button");
     noteElm.style.backgroundColor = note.color;
 
-    noteElm.addEventListener("click", () => {
-      clear();
-      pages.note.create(note);
-    });
+    // noteElm.addEventListener("click", () => {
+    //   clear();
+    //   pages.note.create(note);
+    // });
 
     const noteTitle = document.createElement("p");
     noteTitle.innerText = note.title;
