@@ -29,6 +29,8 @@ import {
   randomColor,
 } from "./parent-module.js";
 
+let previousMode = undefined;
+
 const body = document.querySelector("body");
 const header = document.createElement("header");
 header.setAttribute("id", "header");
@@ -85,6 +87,8 @@ const pages = {
       );
 
       const trashButton = components.button("recently deleted", () => {
+        previousMode = currentMode;
+        setCurrentMode("trash");
         changePage("home", "trash");
       });
 
@@ -231,6 +235,7 @@ const pages = {
             start.y > canvas.clientHeight - 100 &&
             start.y < canvas.clientHeight
           ) {
+            previousMode = currentMode;
             setCurrentMode("trash");
             changePage("home", "trash");
           }
@@ -301,8 +306,8 @@ const pages = {
         headerText.innerText = "Recently Deleted";
 
         const backButton = components.button("home", () => {
-          setCurrentMode("grid");
-          changePage("home", "grid");
+          setCurrentMode(previousMode);
+          changePage("home", previousMode);
         });
 
         const noteButtonDiv = document.createElement("div");
