@@ -3,6 +3,7 @@ import {
   notes,
   saveNote,
   deleteNote,
+  deleteConfirmation,
   deletedNotes,
   clear,
   checkFontContrast,
@@ -12,7 +13,8 @@ import {
   setMultipleAttributes,
   changePage,
   createSortMethod,
-  sortAndMapNotes,
+  sortNotes,
+  mapNotes,
   setCurrentMode,
   createIntroNote,
   NOTE_COLOR,
@@ -21,6 +23,7 @@ import {
   NOTE_WIDTH,
   NOTE_HEIGHT,
   CanvasNote,
+  TrashBin,
   canvasNoteFromCoords,
   checkForCoords,
   randomColor,
@@ -81,6 +84,10 @@ const pages = {
         }
       );
 
+      const trashButton = components.button("recently deleted", () => {
+        changePage("home", "trash");
+      });
+
       header.append(
         headerText,
         newNoteButton,
@@ -90,11 +97,14 @@ const pages = {
       );
 
       if (mode === "grid") {
+        const sortMenuDiv = document.createElement("div");
+
         const sortMenu = document.createElement("select");
         sortMenu.setAttribute("id", "sort-menu");
         sortMenu.value = "<--select an option-->";
         sortMenu.addEventListener("change", () => {
-          sortAndMapNotes();
+          sortNotes();
+          mapNotes(notes);
         });
         const labelForSortMenu = document.createElement("label");
         setMultipleAttributes(labelForSortMenu, {
@@ -102,7 +112,8 @@ const pages = {
           class: "label-for-sort-menu",
         });
         labelForSortMenu.innerText = "Sort Notes By:";
-        timeStampDiv.append(labelForSortMenu, sortMenu);
+        sortMenuDiv.append(labelForSortMenu, sortMenu);
+        timeStampDiv.append(sortMenuDiv, trashButton);
 
         createSortMethod("<--select an option-->");
         createSortMethod("Date Updated: new to old");
@@ -115,8 +126,8 @@ const pages = {
 
         container.append(noteButtonDiv);
 
-        sortAndMapNotes();
-      } else {
+        mapNotes(notes);
+      } else if (mode === "canvas") {
         const canvas = document.createElement("canvas");
         canvas.width = window.innerWidth;
         canvas.height =
@@ -125,6 +136,8 @@ const pages = {
         container.append(canvas);
 
         const canvasNotes = notes.map((note) => CanvasNote(canvas, c, note));
+
+        const trashBin = TrashBin(canvas, c, deletedNotes);
 
         let currentNote = undefined;
         let mouseIsDown = false;
@@ -154,8 +167,14 @@ const pages = {
             start.x,
             start.y
           );
-
           currentNote = canvasNote;
+
+          //keeps animation from running needlessly
+
+          if (!currentNote) {
+            return;
+          }
+
           mouseIsDown = true;
           canvasNotes.push(
             canvasNotes.splice(canvasNotes.indexOf(currentNote), 1)[0]
@@ -176,6 +195,8 @@ const pages = {
             y: currentNote.note.y,
           });
           if (
+            //detects mouse on + button
+
             start.x < currentNote.note.x + 14 &&
             start.x > currentNote.note.x &&
             start.y < currentNote.note.y + 14 &&
@@ -184,8 +205,35 @@ const pages = {
             clear();
             pages.note.create(currentNote.note);
           }
+          if (
+            // detects mouse on trash bin
+
+            mouse.x > canvas.clientWidth / 2 - 20 &&
+            mouse.x < canvas.clientWidth / 2 + 20 &&
+            mouse.y > canvas.clientHeight - 100 &&
+            mouse.y < canvas.clientHeight
+          ) {
+            deleteNote(currentNote.note);
+            currentNote = undefined;
+            mouseIsDown = false;
+          }
+
           currentNote = undefined;
           mouseIsDown = false;
+        });
+
+        canvas.addEventListener("dblclick", (event) => {
+          event.preventDefault();
+
+          if (
+            start.x > canvas.clientWidth / 2 - 20 &&
+            start.x < canvas.clientWidth / 2 + 20 &&
+            start.y > canvas.clientHeight - 100 &&
+            start.y < canvas.clientHeight
+          ) {
+            setCurrentMode("trash");
+            changePage("home", "trash");
+          }
         });
 
         canvas.addEventListener("mouseout", (event) => {
@@ -226,24 +274,44 @@ const pages = {
 
         window.addEventListener("resize", () => {
           canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
+          canvas.height =
+            window.innerHeight -
+            header.clientHeight -
+            timeStampDiv.clientHeight;
+
           animate();
         });
 
         const animate = () => {
-          const requestAnimationFrame = window.requestAnimationFrame(animate);
-
-          if (canvasNotes.length === 0) {
-            window.cancelAnimationFrame(requestAnimationFrame);
-          }
+          window.requestAnimationFrame(animate);
 
           c.clearRect(0, 0, innerWidth, innerHeight);
+
+          trashBin.draw();
 
           for (let i = 0; i < canvasNotes.length; i++) {
             canvasNotes[i].update();
           }
         };
+
         animate();
+      } else {
+        header.innerHTML = "";
+        const headerText = document.createElement("h1");
+        headerText.innerText = "Recently Deleted";
+
+        const backButton = components.button("home", () => {
+          setCurrentMode("grid");
+          changePage("home", "grid");
+        });
+
+        const noteButtonDiv = document.createElement("div");
+        noteButtonDiv.classList.add("note-button-div");
+
+        header.append(headerText, backButton);
+        container.append(noteButtonDiv);
+
+        mapNotes(deletedNotes);
       }
     },
   },
@@ -303,8 +371,15 @@ const pages = {
         timeStamp.innerText = `Created On: ${note.created} ---- Last Edit: ${note.updated}`;
         timeStampDiv.append(timeStamp);
 
+        let saveButtonText = undefined;
+        if (currentMode !== "trash") {
+          saveButtonText = "save";
+        } else {
+          saveButtonText = "restore";
+        }
+
         const saveButton = components.button(
-          "save",
+          saveButtonText,
           () => {
             saveNote({
               id: note.id,
@@ -319,6 +394,9 @@ const pages = {
               width: note.width,
               height: note.height,
             });
+            if (currentMode === "trash") {
+              deleteNote(note);
+            }
             changePage("home", currentMode);
           },
           "save-button"
@@ -327,7 +405,11 @@ const pages = {
         const deleteButton = components.button(
           "delete",
           () => {
-            deleteNote(note);
+            if (currentMode === "trash") {
+              deleteConfirmation(note);
+            } else {
+              deleteNote(note);
+            }
           },
           "delete-button"
         );
@@ -363,42 +445,6 @@ const pages = {
       }
       header.append(titleInput, backButton);
       colorPickerDiv.append(colorPicker, randomColorButton);
-    },
-  },
-  trash: {
-    create() {
-      const headerText = document.createElement("h1");
-      headerText.innerText = "Trash";
-
-      const backButton = components.button("back", () =>
-        changePage("home", currentMode)
-      );
-
-      const noteButtonDiv = document.createElement("div");
-      noteButtonDiv.classList.add("note-button-div");
-
-      header.append(headerText, backButton);
-      container.append(noteButtonDiv);
-
-      deletedNotes.map((note) => {
-        const noteButtonDiv = document.querySelector(".note-button-div");
-        const noteElm = document.createElement("button");
-        noteElm.classList.add("note-button");
-        noteElm.style.backgroundColor = note.color;
-
-        noteElm.addEventListener("click", () => {
-          clear();
-          pages.note.create(note);
-        });
-
-        const noteTitle = document.createElement("p");
-        noteTitle.innerText = note.title;
-        noteTitle.style.color = checkFontContrast(note.color);
-
-        noteElm.appendChild(noteTitle);
-
-        noteButtonDiv.appendChild(noteElm);
-      });
     },
   },
 };

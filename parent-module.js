@@ -6,6 +6,7 @@ export {
   notes,
   saveNote,
   deleteNote,
+  deleteConfirmation,
   deletedNotes,
   clear,
   checkFontContrast,
@@ -15,14 +16,15 @@ export {
   setMultipleAttributes,
   changePage,
   createSortMethod,
-  sortAndMapNotes,
+  sortNotes,
+  mapNotes,
   setCurrentMode,
   createIntroNote,
   checkForCoords,
   randomColor,
 } from "./functions.js";
 
-export { CanvasNote, canvasNoteFromCoords } from "./canvas.js";
+export { CanvasNote, canvasNoteFromCoords, TrashBin } from "./canvas.js";
 
 export {
   NOTE_COLOR,

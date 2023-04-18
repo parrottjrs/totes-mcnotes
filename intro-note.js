@@ -47,7 +47,16 @@ const introNoteContent = [
   { attributes: { header: 2 }, insert: "\n" },
   {
     insert:
-      "All notes in Totes are stored in a dragon's stomach deep in the pacific ocean for safe keeping.\n\nJust kidding.\n\nThis app utilizes your browser's local storage. This means your notes are saved to this browser and this browser alone.\n\n\"What if I want to take my notes elsewhere?\"",
+      "All notes in Totes are stored in a dragon's stomach deep in the pacific ocean for safe keeping.\n\nJust kidding.\n\nThis app utilizes your browser's local storage. This means your notes are saved to this browser and this browser alone.\n\nDeleting Notes",
+  },
+  { attributes: { header: 2 }, insert: "\n" },
+  { insert: "When you delete a note, it moves into the " },
+  { attributes: { bold: true }, insert: '"recently deleted"' },
+  { insert: " section. \n\nOnce you're in" },
+  { attributes: { bold: true }, insert: " " },
+  {
+    insert:
+      '"recently deleted" you can select notes and either delete or restore them. But beware-- once a note is deleted from this section, there\'s no way to get it back. Be careful!\n\n"What if I want to take my notes elsewhere?"',
   },
   { attributes: { header: 3 }, insert: "\n" },
   {
@@ -75,8 +84,13 @@ const introNoteContent = [
   { attributes: { list: "ordered" }, insert: "\n" },
   {
     insert:
-      "\nDon't worry about duplicate notes. Totes will fix that up for you during the import process!\n\nNow for my favourite part:",
+      "\nDon't worry about duplicate notes. Totes will fix that up for you during the import process!\n\nNote: this will not bring recently deleted notes. Should it? ",
   },
+  {
+    attributes: { italic: true },
+    insert: "Let me know! (contact details below)",
+  },
+  { insert: "\n\nNow for my favourite part:" },
   { attributes: { header: 2 }, insert: "\n" },
   { insert: 'Totes McNotes has 2 different "modes". They are:\nGrid, and' },
   { attributes: { list: "ordered" }, insert: "\n" },
@@ -91,7 +105,7 @@ const introNoteContent = [
   { attributes: { header: 3 }, insert: "\n" },
   {
     insert:
-      "*Note: At the moment, Canvas mode is not fully functional on touch screens.\n\nThis is the part where I had the most fun during creation. This is the mode that embodies the energy that Totes McNotes really wants to get across. \n\nPut simply, canvas mode gives you the freedom to drag and drop your notes wherever you want on the cork board. The little plus sign in the top left of each note is your edit button. Apart from this, everything works just like in grid mode. \n\nThings and people that made Totes McNotes possible:",
+      "*Note: At the moment, Canvas mode is not fully functional on touch screens.\n\nThis is the part where I had the most fun during creation. This is the mode that embodies the energy that Totes McNotes really wants to get across. \n\nPut simply, canvas mode gives you the freedom to drag and drop your notes wherever you want on the cork board. The little plus sign in the top left of each note is your edit button. \n\nYou can also drag notes into the trash bin at the bottom of the screen. Double click on the bin to open your recently deleted notes!\n\nApart from these few differences, everything works just like in grid mode.\n\nThings and people that made Totes McNotes possible:",
   },
   { attributes: { header: 2 }, insert: "\n" },
   { insert: "HTML" },
@@ -116,7 +130,7 @@ const introNoteContent = [
   { attributes: { header: 2 }, insert: "\n" },
   {
     insert:
-      "If you made it to the end, congratulations! Your prize is a healthy dose of self satisfaction. Can you feel it? Now go make some notes. Put them out into the world and let them fly, or whatever it is that notes do.\n\nEnjoy!\n\n-Jordan Parrott\n",
+      "If you made it to the end, congratulations! Your prize is a healthy dose of self satisfaction. Can you feel it? Now go make some notes. Put them out into the world and let them fly, or whatever it is that notes do.\n\nEnjoy!\n\n-Jordan Parrott\n\ne-mail: parrottjrs@gmail.com\ninstagram & twitter: @aparrotwithadhd\n\n",
   },
 ];
 

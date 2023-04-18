@@ -61,15 +61,31 @@ const saveNote = (updatedNote) => {
 };
 
 const deleteNote = (noteToDelete) => {
-  notes = notes.filter((note) => note.id != noteToDelete.id);
-  localStorage.setItem("notes", JSON.stringify(notes));
-  deletedNotes.unshift(noteToDelete);
-  localStorage.setItem("deletedNotes", JSON.stringify(deletedNotes));
+  if (currentMode === "trash") {
+    // removes note from deletedNotes. Used for both permanently
+    // deleting and restoring note to saved notes list
 
-  if (currentMode === "grid") {
-    changePage("home", currentMode);
+    deletedNotes = deletedNotes.filter((note) => note.id != noteToDelete.id);
+    localStorage.setItem("deletedNotes", JSON.stringify(deletedNotes));
+    console.log(currentMode);
   } else {
-    changePage("home", currentMode);
+    notes = notes.filter((note) => note.id != noteToDelete.id);
+    localStorage.setItem("notes", JSON.stringify(notes));
+    deletedNotes.unshift(noteToDelete);
+    localStorage.setItem("deletedNotes", JSON.stringify(deletedNotes));
+  }
+  changePage("home", currentMode);
+};
+
+const deleteConfirmation = (note) => {
+  const response = confirm(
+    "This will permanently delete your note. If you click ok, your note will never see the sun again."
+  );
+
+  if (response) {
+    deleteNote(note);
+  } else {
+    //nothing
   }
 };
 
@@ -174,15 +190,8 @@ const createSortMethod = (selection) => {
   sortMenu.append(option);
 };
 
-const sortAndMapNotes = () => {
-  if (currentMode === "canvas") {
-    notes = notes.sort((a, b) =>
-      new Date(a.moved) < new Date(b.moved) ? -1 : 1
-    );
-    return notes;
-  }
+const sortNotes = () => {
   const sortMenu = document.querySelector("#sort-menu");
-  const noteButtonDiv = document.querySelector(".note-button-div");
 
   if (
     sortMenu.value === "Date Updated: new to old" ||
@@ -196,9 +205,13 @@ const sortAndMapNotes = () => {
   } else if (sortMenu.value === "Date Updated: old to new") {
     notes.sort((a, b) => (new Date(a.updated) < new Date(b.updated) ? -1 : 1));
   }
+};
+
+const mapNotes = (notesList) => {
+  const noteButtonDiv = document.querySelector(".note-button-div");
   noteButtonDiv.innerHTML = "";
 
-  notes.map((note) => {
+  notesList.map((note) => {
     const noteButtonDiv = document.querySelector(".note-button-div");
 
     const noteElm = components.button(
@@ -209,14 +222,8 @@ const sortAndMapNotes = () => {
       },
       "note-button"
     );
-    // const noteElm = document.createElement("button");
-    // noteElm.classList.add("note-button");
-    noteElm.style.backgroundColor = note.color;
 
-    // noteElm.addEventListener("click", () => {
-    //   clear();
-    //   pages.note.create(note);
-    // });
+    noteElm.style.backgroundColor = note.color;
 
     const noteTitle = document.createElement("p");
     noteTitle.innerText = note.title;
@@ -270,7 +277,7 @@ function randomColor() {
 
   let myColor = `#${hex1}${hex2}${hex3}`;
 
-  /* color picker doesn't like when hex != rrggbb */
+  // color picker doesn't like when hex != rrggbb
 
   if (myColor.length < 7) {
     myColor = randomColor();
@@ -285,6 +292,7 @@ export {
   notes,
   saveNote,
   deleteNote,
+  deleteConfirmation,
   deletedNotes,
   clear,
   checkFontContrast,
@@ -294,7 +302,8 @@ export {
   setMultipleAttributes,
   changePage,
   createSortMethod,
-  sortAndMapNotes,
+  sortNotes,
+  mapNotes,
   setCurrentMode,
   createIntroNote,
   checkForCoords,

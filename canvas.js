@@ -50,6 +50,40 @@ const CanvasNote = (canvas, c, note) => {
   };
 };
 
+const TrashBin = (canvas, c, deletedNotes) => {
+  const trashImage = new Image();
+  trashImage.src = "./images/recycle.png";
+
+  const draw = () => {
+    if (deletedNotes.length === 0) {
+      c.drawImage(
+        trashImage,
+        0,
+        0,
+        trashImage.width / 2,
+        trashImage.height,
+        canvas.clientWidth / 2 - trashImage.width / 4,
+        canvas.clientHeight - 100,
+        trashImage.width / 2,
+        trashImage.height
+      );
+    } else {
+      c.drawImage(
+        trashImage,
+        trashImage.width / 2,
+        0,
+        trashImage.width / 2,
+        trashImage.height,
+        canvas.clientWidth / 2 - trashImage.width / 4,
+        canvas.clientHeight - 100,
+        trashImage.width / 2,
+        trashImage.height
+      );
+    }
+  };
+  return { draw };
+};
+
 const canvasNoteFromCoords = (canvasNotes, x, y) => {
   return [...canvasNotes]
     .reverse()
@@ -92,4 +126,4 @@ const wrapCanvasText = (c, text, x, y, maxWidth, lineHeight) => {
   return lineArray;
 };
 
-export { CanvasNote, canvasNoteFromCoords };
+export { CanvasNote, canvasNoteFromCoords, TrashBin };

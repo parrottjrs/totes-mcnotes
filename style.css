@@ -14,7 +14,7 @@
 }
 
 body {
-  background-image: url(./cork.jpg);
+  background-image: url(./images/cork.jpg);
   margin: 0;
 }
 
@@ -45,7 +45,7 @@ h1 {
   );
   border-bottom: 0.8rem ridge var(--bottom-border-color);
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   white-space: nowrap;
 }
@@ -69,7 +69,6 @@ h1,
 
 .label-for-sort-menu {
   padding: 1em;
-  font-size: ;
 }
 
 section {
