@@ -39,6 +39,14 @@ Just kidding.
 
 This app utilizes your browser's local storage. This means your notes are saved to this browser and this browser alone.
 
+## Deleting notes
+
+When you delete a note, it moves into the "recently deleted" section. 
+
+Once you're in "recently deleted" you can select notes and either delete or restore them. But beware-- once a note is deleted from this section, there's no way to get it back. 
+
+Be careful!
+
 ### "What if I want to take my notes elsewhere?"
 
 I was hoping you'd ask that question! Here's what you want to do:
@@ -56,6 +64,9 @@ I was hoping you'd ask that question! Here's what you want to do:
 
 Don't worry about duplicate notes. Totes will fix that up for you during the import process.
 
+
+Note: this will not bring recently deleted notes. Should it? _Let me know!_ (contact details below)
+
 ## Now for my favourite part:
 
 Totes McNotes has 2 different "modes" -- Grid and Canvas.
@@ -68,12 +79,14 @@ Grid is the default mode for Totes. It organizes your notes in...well...a grid. 
 
 This is the part where I had the most fun during creation. It was a big challenge that really paid off, because it is the mode that embodies the energy that Totes McNotes really wants to get across.
 
-Put simply, canvas mode gives you the freedom to drag and drop your notes wherever you want on the cork board. The little plus sign in the top left of each note is your edit button. Apart from this, everything works just like in grid mode.
+Put simply, canvas mode gives you the freedom to drag and drop your notes wherever you want on the cork board. The little plus sign in the top left of each note is your edit button. 
+
+You can also drag notes into the trash bin at the bottom of the screen. Double click on the bin to open your recently deleted notes!
+
+Apart from this, everything works just like in grid mode.
 
 
-
-https://user-images.githubusercontent.com/124001846/232258521-051a31c5-71ee-4386-a0a9-c0b2fca81db3.mp4
-
+https://user-images.githubusercontent.com/124001846/232640276-1bd76411-09b8-4f10-9aa1-50de0ab4d8ef.mp4
 
 
 _Note: At the moment, Canvas mode is not fully functional on touch screens._
@@ -96,5 +109,9 @@ If you made it to the end, congratulations! Your prize is a healthy dose of self
 Enjoy!
 
 -Jordan Parrott
+
+[e-mail](mailto:parrottjrs@gmail.com)
+[instagram](www.instagram.com/aparrotwithadhd)
+[twitter](www.twitter.com/aparrotwithadhd)
 
 https://parrottjrs.github.io/totes-mcnotes/
