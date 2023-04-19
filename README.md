@@ -105,7 +105,7 @@ Enjoy!
 -Jordan Parrott
 
 [e-mail](mailto:parrottjrs@gmail.com)
-[instagram](www.instagram.com/aparrotwithadhd)
-[twitter](www.twitter.com/aparrotwithadhd)
+[instagram](https://www.instagram.com/aparrotwithadhd)
+[twitter](https://www.twitter.com/aparrotwithadhd)
 
 https://parrottjrs.github.io/totes-mcnotes/
