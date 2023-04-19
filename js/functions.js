@@ -1,5 +1,6 @@
 import { timeStampDiv } from "./consts.js";
 import { pages } from "./pages/index.js";
+import { introNote } from "./intro-note.js";
 
 export let currentMode = localStorage.currentMode || "grid";
 

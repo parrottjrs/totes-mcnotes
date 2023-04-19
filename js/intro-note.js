@@ -1,3 +1,5 @@
+import { NOTE_COLOR, NOTE_HEIGHT, NOTE_SIZE, NOTE_WIDTH } from "./consts.js";
+
 const introNoteContent = [
   { insert: "Hi, my name is Jordan and Welcome to Totes McNotes!" },
   { attributes: { header: 1 }, insert: "\n" },
