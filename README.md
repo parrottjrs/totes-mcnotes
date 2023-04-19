@@ -21,9 +21,7 @@ Using Totes McNotes is easy! Just follow these instructions and you'll be a pro 
 5. Click "create"
 6. Congratulations, you've made your first note! High five!
 
-
 https://user-images.githubusercontent.com/124001846/232258739-2fe2235c-c90a-4342-b708-d0fba20534c5.mp4
-
 
 Once a new note is created, it will appear on the home page.
 
@@ -41,9 +39,9 @@ This app utilizes your browser's local storage. This means your notes are saved 
 
 ## Deleting notes
 
-When you delete a note, it moves into the "recently deleted" section. 
+When you delete a note, it moves into the "recently deleted" section.
 
-Once you're in "recently deleted" you can select notes and either delete or restore them. But beware-- once a note is deleted from this section, there's no way to get it back. 
+Once you're in "recently deleted" you can select notes and either delete or restore them. But beware-- once a note is deleted from this section, there's no way to get it back.
 
 Be careful!
 
@@ -61,9 +59,7 @@ I was hoping you'd ask that question! Here's what you want to do:
 
 <img width="983" alt="Screenshot 2023-04-14 at 7 35 09 PM" src="https://user-images.githubusercontent.com/124001846/232258501-89838850-e7e3-4ba7-818b-801925bdd395.png">
 
-
 Don't worry about duplicate notes. Totes will fix that up for you during the import process.
-
 
 Note: this will not bring recently deleted notes. Should it? _Let me know!_ (contact details below)
 
@@ -79,15 +75,13 @@ Grid is the default mode for Totes. It organizes your notes in...well...a grid. 
 
 This is the part where I had the most fun during creation. It was a big challenge that really paid off, because it is the mode that embodies the energy that Totes McNotes really wants to get across.
 
-Put simply, canvas mode gives you the freedom to drag and drop your notes wherever you want on the cork board. The little plus sign in the top left of each note is your edit button. 
+Put simply, canvas mode gives you the freedom to drag and drop your notes wherever you want on the cork board. The little plus sign in the top left of each note is your edit button.
 
 You can also drag notes into the trash bin at the bottom of the screen. Double click on the bin to open your recently deleted notes!
 
 Apart from this, everything works just like in grid mode.
 
-
 https://user-images.githubusercontent.com/124001846/232640276-1bd76411-09b8-4f10-9aa1-50de0ab4d8ef.mp4
-
 
 _Note: At the moment, Canvas mode is not fully functional on touch screens._
 

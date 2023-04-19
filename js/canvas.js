@@ -1,8 +1,7 @@
-import { checkFontContrast } from "./parent-module.js";
+import { MAX_LINES_KEY } from "./consts.js";
+import { checkFontContrast } from "./functions.js";
 
-const MAX_LINES_KEY = 5;
-
-const CanvasNote = (canvas, c, note) => {
+export const CanvasNote = (canvas, c, note) => {
   const draw = () => {
     c.beginPath();
     c.fillStyle = note.color;
@@ -50,7 +49,7 @@ const CanvasNote = (canvas, c, note) => {
   };
 };
 
-const TrashBin = (canvas, c, deletedNotes) => {
+export const TrashBin = (canvas, c, deletedNotes) => {
   const trashImage = new Image();
   trashImage.src = "./images/recycle.png";
 
@@ -84,7 +83,7 @@ const TrashBin = (canvas, c, deletedNotes) => {
   return { draw };
 };
 
-const canvasNoteFromCoords = (canvasNotes, x, y) => {
+export const canvasNoteFromCoords = (canvasNotes, x, y) => {
   return [...canvasNotes]
     .reverse()
     .find(
@@ -96,7 +95,7 @@ const canvasNoteFromCoords = (canvasNotes, x, y) => {
     );
 };
 
-const wrapCanvasText = (c, text, x, y, maxWidth, lineHeight) => {
+export const wrapCanvasText = (c, text, x, y, maxWidth, lineHeight) => {
   let words = text.split(" ");
   let line = "";
   let testLine = "";
@@ -125,5 +124,3 @@ const wrapCanvasText = (c, text, x, y, maxWidth, lineHeight) => {
   }
   return lineArray;
 };
-
-export { CanvasNote, canvasNoteFromCoords, TrashBin };

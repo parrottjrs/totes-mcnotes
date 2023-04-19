@@ -1,16 +1,9 @@
-import {
-  introNote,
-  timeStampDiv,
-  pages,
-  NOTE_WIDTH,
-  NOTE_HEIGHT,
-  NOTE_X,
-  NOTE_Y,
-} from "./parent-module.js";
+import { timeStampDiv } from "./consts.js";
+import { pages } from "./pages/index.js";
 
-let currentMode = localStorage.currentMode || "grid";
+export let currentMode = localStorage.currentMode || "grid";
 
-const getNotes = () => {
+export const getNotes = () => {
   const maybeNotes = localStorage.getItem("notes");
 
   if (maybeNotes === null) {
@@ -20,9 +13,9 @@ const getNotes = () => {
   }
 };
 
-let notes = getNotes();
+export let notes = getNotes();
 
-const noteTitleFromContent = (note) => {
+export const noteTitleFromContent = (note) => {
   if (note.title === "") {
     let title = "";
     let preview = note.content[0].insert;
@@ -37,7 +30,7 @@ const noteTitleFromContent = (note) => {
   return note.title;
 };
 
-const saveNote = (updatedNote) => {
+export const saveNote = (updatedNote) => {
   const existing = notes.find((note) => note.id == updatedNote.id);
 
   if (existing) {
@@ -60,7 +53,7 @@ const saveNote = (updatedNote) => {
   localStorage.setItem("notes", JSON.stringify(notes));
 };
 
-const deleteNote = (noteToDelete) => {
+export const deleteNote = (noteToDelete) => {
   if (currentMode === "trash") {
     // removes note from deletedNotes. Used for both permanently
     // deleting and restoring note to saved notes list
@@ -77,7 +70,7 @@ const deleteNote = (noteToDelete) => {
   changePage("home", currentMode);
 };
 
-const deleteConfirmation = (note) => {
+export const deleteConfirmation = (note) => {
   const response = confirm(
     "This will permanently delete your note. If you click ok, your note will never see the sun again."
   );
@@ -89,7 +82,7 @@ const deleteConfirmation = (note) => {
   }
 };
 
-const getDeletedNotes = () => {
+export const getDeletedNotes = () => {
   const maybeNotes = localStorage.getItem("deletedNotes");
 
   if (maybeNotes === null) {
@@ -99,15 +92,15 @@ const getDeletedNotes = () => {
   }
 };
 
-let deletedNotes = getDeletedNotes();
+export let deletedNotes = getDeletedNotes();
 
-const clear = () => {
+export const clear = () => {
   header.innerHTML = "";
   container.innerHTML = "";
   timeStampDiv.innerHTML = "";
 };
 
-const checkFontContrast = (hex) => {
+export const checkFontContrast = (hex) => {
   const rgb = [
     `0x${hex[1]}${hex[2]}` | 0,
     `0x${hex[3]}${hex[4]}` | 0,
@@ -120,7 +113,7 @@ const checkFontContrast = (hex) => {
   }
 };
 
-const exportNote = (content, fileName, contentType) => {
+export const exportNote = (content, fileName, contentType) => {
   const noteToDownload = document.createElement("a");
   const file = new Blob([content], { type: contentType });
   noteToDownload.href = URL.createObjectURL(file);
@@ -128,7 +121,7 @@ const exportNote = (content, fileName, contentType) => {
   noteToDownload.click();
 };
 
-const importTotesMcNotes = () => {
+export const importTotesMcNotes = () => {
   const fileSelector = document.createElement("input");
   setMultipleAttributes(fileSelector, { type: "file", id: "file-selector" });
   container.append(fileSelector);
@@ -161,7 +154,7 @@ const importTotesMcNotes = () => {
   fileSelector.click();
 };
 
-const components = {
+export const components = {
   button(text, onClick, cl = "button") {
     const button = document.createElement("button");
     button.innerText = text;
@@ -171,18 +164,18 @@ const components = {
   },
 };
 
-const setMultipleAttributes = (elm, attributes) => {
+export const setMultipleAttributes = (elm, attributes) => {
   for (const key in attributes) {
     elm.setAttribute(key, attributes[key]);
   }
 };
 
-const changePage = (pageKey, mode) => {
+export const changePage = (pageKey, mode) => {
   clear();
   pages[pageKey].create(mode);
 };
 
-const createSortMethod = (selection) => {
+export const createSortMethod = (selection) => {
   const sortMenu = document.querySelector("#sort-menu");
   const option = document.createElement("option");
   option.setAttribute("value", selection);
@@ -190,7 +183,7 @@ const createSortMethod = (selection) => {
   sortMenu.append(option);
 };
 
-const sortNotes = () => {
+export const sortNotes = () => {
   const sortMenu = document.querySelector("#sort-menu");
 
   if (
@@ -207,7 +200,7 @@ const sortNotes = () => {
   }
 };
 
-const mapNotes = (notesList) => {
+export const mapNotes = (notesList) => {
   const noteButtonDiv = document.querySelector(".note-button-div");
   noteButtonDiv.innerHTML = "";
 
@@ -235,18 +228,18 @@ const mapNotes = (notesList) => {
   });
 };
 
-const setCurrentMode = (mode = "grid") => {
+export const setCurrentMode = (mode = "grid") => {
   localStorage.setItem("currentMode", mode);
   currentMode = mode;
 };
 
-const createIntroNote = () => {
+export const createIntroNote = () => {
   if (notes.length === 0 && deletedNotes.length === 0) {
     saveNote(introNote);
   }
 };
 
-const checkForCoords = (note) => {
+export const checkForCoords = (note) => {
   const x = note.hasOwnProperty("x");
 
   if (!x) {
@@ -266,11 +259,11 @@ const checkForCoords = (note) => {
   }
 };
 
-function randomInteger(max) {
+export function randomInteger(max) {
   return Math.floor(Math.random() * (max + 1));
 }
 
-function randomColor() {
+export function randomColor() {
   let hex1 = randomInteger(255).toString(16);
   let hex2 = randomInteger(255).toString(16);
   let hex3 = randomInteger(255).toString(16);
@@ -285,27 +278,3 @@ function randomColor() {
 
   return myColor;
 }
-
-export {
-  currentMode,
-  getNotes,
-  notes,
-  saveNote,
-  deleteNote,
-  deleteConfirmation,
-  deletedNotes,
-  clear,
-  checkFontContrast,
-  exportNote,
-  importTotesMcNotes,
-  components,
-  setMultipleAttributes,
-  changePage,
-  createSortMethod,
-  sortNotes,
-  mapNotes,
-  setCurrentMode,
-  createIntroNote,
-  checkForCoords,
-  randomColor,
-};
