@@ -130,17 +130,14 @@ section {
   width: 40rem;
 }
 
-.button {
+.button,
+.delete-button {
   margin-left: 1em;
   display: inline-block;
 }
 
 .delete-button {
   background-color: #e71d36;
-}
-
-.delete-button {
-  margin: 0.3em auto;
 }
 
 .button,

@@ -131,21 +131,14 @@ export const home = {
       canvas.addEventListener("mousedown", (event) => {
         event.preventDefault();
 
-        start.x = event.clientX;
+        start.x = event.clientX + 7;
         start.y =
           event.clientY - header.clientHeight - timeStampDiv.clientHeight - 12;
 
         const canvasNote = canvasNoteFromCoords(canvasNotes, start.x, start.y);
         currentNote = canvasNote;
 
-        //keeps animation from running needlessly
-
-        // if (!currentNote) {
-        //   return;
-        // }
-
         mouseIsDown = true;
-
         canvasNotes.push(
           canvasNotes.splice(canvasNotes.indexOf(currentNote), 1)[0]
         );
