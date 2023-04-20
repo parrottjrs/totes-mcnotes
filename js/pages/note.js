@@ -5,6 +5,7 @@ import {
   NOTE_X,
   NOTE_Y,
   container,
+  header,
   timeStampDiv,
 } from "../consts.js";
 import {
@@ -69,6 +70,8 @@ export const note = {
       quillDiv.style.color = checkFontContrast(myColor);
       toolBar.style.backgroundColor = myColor;
     });
+    header.append(titleInput, backButton);
+    colorPickerDiv.append(colorPicker, randomColorButton);
 
     if (note) {
       const timeStamp = document.createElement("p");
@@ -82,29 +85,25 @@ export const note = {
         saveButtonText = "restore";
       }
 
-      const saveButton = components.button(
-        saveButtonText,
-        () => {
-          saveNote({
-            id: note.id,
-            title: titleInput.value,
-            content: quill.getContents().ops,
-            color: colorPicker.value,
-            created: note.created,
-            updated: new Date().toLocaleString("en-US"),
-            moved: note.moved,
-            x: note.x,
-            y: note.y,
-            width: note.width,
-            height: note.height,
-          });
-          if (currentMode === "trash") {
-            deleteNote(note);
-          }
-          changePage("home", currentMode);
-        },
-        "save-button"
-      );
+      const saveButton = components.button(saveButtonText, () => {
+        saveNote({
+          id: note.id,
+          title: titleInput.value,
+          content: quill.getContents().ops,
+          color: colorPicker.value,
+          created: note.created,
+          updated: new Date().toLocaleString("en-US"),
+          moved: note.moved,
+          x: note.x,
+          y: note.y,
+          width: note.width,
+          height: note.height,
+        });
+        if (currentMode === "trash") {
+          deleteNote(note);
+        }
+        changePage("home", currentMode);
+      });
 
       const deleteButton = components.button(
         "delete",
@@ -117,7 +116,7 @@ export const note = {
         },
         "delete-button"
       );
-      container.append(saveButton, deleteButton);
+      header.append(saveButton, deleteButton);
 
       titleInput.value = note.title;
       colorPicker.value = note.color;
@@ -126,28 +125,22 @@ export const note = {
       quillDiv.style.backgroundColor = note.color;
       quillDiv.style.color = checkFontContrast(note.color);
     } else {
-      const saveButton = components.button(
-        "create",
-        () => {
-          saveNote({
-            title: titleInput.value,
-            content: quill.getContents().ops,
-            color: colorPicker.value,
-            created: new Date().toLocaleString("en-US"),
-            updated: new Date().toLocaleString("en-US"),
-            moved: new Date().toLocaleString("en-US"),
-            x: NOTE_X,
-            y: NOTE_Y,
-            width: NOTE_WIDTH,
-            height: NOTE_HEIGHT,
-          });
-          changePage("home", currentMode);
-        },
-        "save-button"
-      );
-      container.append(saveButton);
+      const saveButton = components.button("create", () => {
+        saveNote({
+          title: titleInput.value,
+          content: quill.getContents().ops,
+          color: colorPicker.value,
+          created: new Date().toLocaleString("en-US"),
+          updated: new Date().toLocaleString("en-US"),
+          moved: new Date().toLocaleString("en-US"),
+          x: NOTE_X,
+          y: NOTE_Y,
+          width: NOTE_WIDTH,
+          height: NOTE_HEIGHT,
+        });
+        changePage("home", currentMode);
+      });
+      header.append(saveButton);
     }
-    header.append(titleInput, backButton);
-    colorPickerDiv.append(colorPicker, randomColorButton);
   },
 };

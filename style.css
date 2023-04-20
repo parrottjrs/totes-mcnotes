@@ -113,7 +113,6 @@ section {
 #sort-menu,
 .label-for-sort-menu,
 .button,
-.save-button,
 .title-input,
 .delete-button {
   font-family: var(--button-and-input-font);
@@ -140,19 +139,16 @@ section {
   background-color: #e71d36;
 }
 
-.save-button,
 .delete-button {
   margin: 0.3em auto;
 }
 
 .button,
-.save-button,
 #color-picker {
   background-color: var(--button-background-color);
 }
 
 .button,
-.save-button,
 .delete-button {
   height: 2rem;
   width: 10rem;
@@ -163,7 +159,6 @@ section {
 }
 
 .button:hover,
-.save-button:hover,
 #color-picker:hover {
   background-color: var(--button-hover-color);
 }
