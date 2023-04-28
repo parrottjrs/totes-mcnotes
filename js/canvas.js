@@ -6,6 +6,7 @@ export const CanvasNote = (canvas, c, note) => {
     c.beginPath();
     c.fillStyle = note.color;
     c.fillRect(note.x, note.y, note.width, note.height);
+    c.strokeStyle = checkFontContrast(note.color);
     c.strokeRect(note.x, note.y, note.width, note.height);
     c.font = "20px arial";
     c.fillStyle = checkFontContrast(note.color);
