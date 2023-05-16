@@ -1,5 +1,7 @@
 # Hi, my name is Jordan and Welcome to Totes McNotes!
 
+# [parrottjrs.github.io/totes-mcnotes/](https://parrottjrs.github.io/totes-mcnotes/)
+
 <img width="920" alt="Screenshot 2023-04-12 at 8 57 11 PM" src="https://user-images.githubusercontent.com/124001846/231609632-bf8f0029-0643-4094-a6a5-2597cd8391b9.png">
 
 This app was made as my first project for [Get Coding NL](https://www.getcoding.ca).
